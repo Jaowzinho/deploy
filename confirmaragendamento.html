@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reservas Efetuadas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/reservas.css" /> 
+</head>
+<body>
+  <header class="container-fluid d-flex justify-content-between align-items-center header-custom">
+    <div class="img-fluid">
+        <img src="img/logo.png" alt="logoacademia" class="img-fluid logo-header">
+    </div>
+    <nav>
+        <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
+            <li class="">
+              <a href="adm.html">
+                <img src="icones/Home.png" alt="Home" width="40" height="40" class="img-fluid ">
+              </a>
+            </li>
+        </ul>
+    </nav>
+  </header>
+  
+  <div class="linha-topo-full"></div>
+
+  <main class="container text-white mt-4">
+    <h2 class="fw-bold text-center mb-4">Reservas Efetuadas</h2>
+
+    <div class="reservation-card p-4">
+      <!-- Linha 1: Data | Total | Produto -->
+      <div class="row mb-3 align-items-center text-center text-md-start">
+        <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-start mb-2 mb-md-0">
+          <img src="icones/Calendario.png" alt="Data" class="me-2 icon-small">
+          <span class="reservation-info">20/10/2025 00:00</span>
+        </div>
+        <div class="col-md-4 text-center centralizar-total-compra">
+          <small class="text-secondary d-block">TOTAL COMPRA</small>
+          <h5 class="fw-bold mb-0">R$ 100,00</h5>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-end">
+          <img src="icones/Carrinho.png" alt="Produto" class="me-2 icon-small">
+          <span class="reservation-info">Camiseta preta</span>
+        </div>
+      </div>
+    
+      <!-- Linha 2: Email | Quantidade | Tamanho -->
+      <div class="row mb-3 align-items-center text-center text-md-start">
+        <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-start mb-2 mb-md-0">
+          <img src="icones/Email.png" alt="Email" class="me-2 icon-small">
+          <span class="reservation-info">sueli@gmail.com</span>
+        </div>
+        <div class="col-md-4 text-center centralizar-quantidade">
+          <small class="text-secondary d-block">QUANTIDADE</small>
+          <div class="two-x-container">
+            2X
+          </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-end">
+          <img src="icones/Camisa.png" alt="Tamanho" class="me-2 icon-small">
+          <span class="reservation-info">Tamanho. M</span>
+        </div>
+      </div>
+    
+      <!-- Linha 3: Cliente -->
+      <div class="row mb-4 align-items-center">
+        <div class="col-12 d-flex align-items-center justify-content-center justify-content-md-start">
+          <img src="icones/Pessoa.png" alt="Cliente" class="me-2 icon-small">
+          <span class="reservation-info">Sueli Oliveira</span>
+        </div>
+      </div>
+    
+      <!-- Botões -->
+      <div class="button-group text-center mt-4">
+        <button class="btn btn-danger btn-cancel me-2">Excluir reserva</button>
+        <button class="btn btn-success btn-approve">Aprovar reserva</button>
+      </div>
+      
+  </main>
+
+  <div class="footer-links">
+    <ul>
+      <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
+      <li><a href="gerenciarproduto.html">Gerenciar Produtos</a></li>
+    </ul>
+    <ul>
+      <li><a href="adicionarproduto.html">Adicionar Produtos</a></li>
+      <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
+    </ul>
+  </div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-left">
+      
+    </div>
+
+    <div class="footer-logo">
+      <img src="img/logo1.png" alt="Logo Otávio Pereira">
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
