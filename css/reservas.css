@@ -1,0 +1,316 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #2D2C2C;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header.header-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #2D2C2C;
+}
+
+header .img-fluid.logo-header {
+  width: 50px;
+  height: 50px;
+}
+
+nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: end;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.header-custom .icon-home {
+  width: 50px;
+  height: 50px;
+  background-color: #4a4a7a;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.linha-topo-full {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #000080, #00f);
+  margin-bottom: 10px;
+}
+
+main {
+  flex-grow: 1;
+  padding-bottom: 50px;
+}
+
+h2 {
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+/* --- ESTILO DO CARD DE RESERVA --- */
+.reservation-card {
+  background-color: #2f2f2f;
+  border-radius: 10px;
+  border: 2px solid #000080; /* Azul claro */
+  color: white;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
+  margin-bottom: 20px;
+}
+
+.reservation-card .row {
+  margin-bottom: 10px;
+}
+
+.reservation-card .reservation-info {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+.reservation-card h5 {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.reservation-card small.text-secondary {
+  color: #00ffcc !important;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+
+
+.reservation-card .icon-small {
+  width: 24px;
+  height: 24px;
+  
+}
+
+/* Botões estilizados */
+.btn-cancel {
+  background-color: red;
+  border-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #c82333;
+}
+
+.btn-approve {
+  background-color: #00c87b;
+  border-color: #00c87b;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-approve:hover {
+  background-color: #009f64;
+}
+.two-x-container {
+  width: 100%;           /* Ocupa toda a largura do pai */
+  text-align: center;    /* Centraliza o texto horizontalmente */
+  font-weight: bold;     /* Deixa o texto em negrito (opcional) */
+  font-size: 2rem;       /* Aumenta o tamanho da fonte (opcional) */
+}
+
+
+/* Footer */
+.footer {
+  background: linear-gradient(to bottom, #2D2C2C, #0000ff);
+  color: white;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 50px;
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer-social a img {
+  width: 28px;
+  height: 28px;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.footer-social a:hover img {
+  transform: scale(1.1);
+}
+
+.footer-logo img {
+  max-width: 120px;
+  height: auto;
+  transition: opacity 0.3s;
+}
+
+.footer-logo img:hover {
+  opacity: 0.7;
+}
+
+.footer-bottom {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.footer-terms a {
+  margin: 0 10px;
+  font-size: 13px;
+  color: white;
+  text-decoration: none;
+}
+
+.footer-terms a:hover {
+  text-decoration: underline;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  header.header-custom {
+      padding: 10px 15px;
+  }
+
+  header .img-fluid.logo-header {
+      height: 40px;
+      width: 40px;
+  }
+
+  .header-custom .icon-home {
+      width: 40px;
+      height: 40px;
+  }
+
+  .reservation-card .row > div {
+      text-align: center;
+      margin-bottom: 10px;
+  }
+
+  .reservation-card .row > div:last-child {
+      margin-bottom: 0;
+  }
+
+  .reservation-card .col-auto {
+      display: block;
+      width: 100%;
+  }
+
+  .reservation-card .d-flex.align-items-center {
+      justify-content: center;
+  }
+
+  .footer-links {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .footer-links ul {
+      margin: 10px 0;
+  }
+
+  .footer-top {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+  }
+
+  .footer-left {
+      margin-bottom: 15px;
+  }
+
+  .footer-social {
+      justify-content: center;
+      margin-left: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-cancel, .btn-approve {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+
+  .reservation-card .d-flex.justify-content-center.gap-3 {
+      flex-direction: column;
+  }
+}

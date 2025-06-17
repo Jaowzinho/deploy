@@ -1,0 +1,202 @@
+/* Estilização geral */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+/* Overlay escurecido */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+}
+.overlay.active {
+    display: block;
+}
+
+/* Estilização do pop-up */
+.login-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(180deg, #121243, #0c0c30);
+    padding: 30px;
+    width: 320px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+}
+.login-popup.active {
+    display: block;
+}
+
+/* Título */
+.login-popup h2 {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Parágrafo */
+.login-popup p {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.login-popup label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccc;
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Campos de entrada genéricos */
+.login-popup input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+}
+.login-popup input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+.login-popup input:focus {
+    border: 2px solid #6a5acd;
+}
+
+/* Link "Esqueci senha" */
+.forgot-password {
+    display: block;
+    text-align: right;
+    color: #6a5acd;
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Botão de login genérico */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    color: #121243;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.login-btn:hover {
+    background: white;
+    color: white;
+}
+
+/* Link de cadastro */
+.register-link {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+}
+.register-link:hover {
+    text-decoration: underline;
+}
+
+/* Imagem do Banner */
+.banner img {
+    position: relative;
+    z-index: 1;
+}
+
+/* -------- ESTILIZAÇÃO NOVA PARA VERIFICAÇÃO DE CÓDIGO -------- */
+
+/* Texto no topo da verificação */
+.verificacao-titulo {
+    text-align: left;
+    color: lightgray;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Subtítulo da verificação */
+.verificacao-subtitulo {
+    margin-bottom: 10px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Texto explicativo */
+.verificacao-texto {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+/* Contêiner dos campos de código */
+.codigo-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+/* Campos individuais de código */
+.codigo {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 8px;
+    border: 2px solid #0000ff;
+    background-color: black;
+    color: white;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.codigo:focus {
+    border: 2px solid #00c3ff;
+}
+
+/* Botão "Enviar" */
+.btn-enviar-codigo {
+    padding: 12px 20px;
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-enviar-codigo:hover {
+    background-color: #0000cc;
+}

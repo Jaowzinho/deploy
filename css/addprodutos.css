@@ -1,0 +1,412 @@
+/* Reset e base */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #2D2C2C;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Estrutura principal */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+input::placeholder {
+    color: #ccc;
+    /* ou qualquer cor visível */
+    opacity: 1;
+    /* garante que não fique transparente */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #2D2C2C;
+}
+
+.img-fluid {
+    width: 50px;
+    height: 50px;
+}
+
+nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: end;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.linha-topo-full {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #000080, #00f);
+    margin-bottom: 10px;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #2D2C2C;
+    color: white;
+}
+
+/* Caixa de conteúdo do formulário */
+.content-box {
+    width: 100%;
+    margin: 0;
+}
+
+/* Títulos */
+h2,
+h3,
+label {
+    color: #ffffff;
+}
+
+/* Inputs e selects */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Botões */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+button.pesquisar {
+    background-color: #0066ff;
+    margin-left: 10px;
+}
+
+button.pesquisar:hover {
+    background-color: #0052cc;
+}
+
+button.adicionar {
+    background-color: #007BFF;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button.adicionar:hover {
+    background-color: #0069d9;
+}
+
+button.remover-item {
+    background-color: #dc3545;
+    margin-right: 5px;
+}
+
+button.adicionar-item {
+    background-color: #28a745;
+}
+
+button.adicionar-item:hover {
+    background-color: #218838;
+}
+
+/* Produto com botão de quantidade */
+.produto-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.produto-info {
+    flex: 1;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quantidade-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantidade-controls button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    line-height: 0;
+}
+
+.quantidade-controls input {
+    width: 40px;
+    text-align: center;
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 4px;
+}
+
+/* Imagem do produto */
+.produto-imagem {
+    width: 400px;
+    height: 400px;
+    background-color: #444;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Seção de tamanhos dentro do produto */
+.product-sizes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Cada linha de tamanho */
+.size-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Label do tamanho */
+.size-label {
+    width: 50px;
+    flex-shrink: 0;
+}
+
+/* Input de preço */
+.size-row input[type="number"] {
+    width: 100px;
+    padding: 5px 8px;
+    background-color: #fff;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: black;
+    text-align: right;
+}
+
+/* Controles de quantidade (botões + input) */
+.size-row .quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Botões de quantidade estilizados */
+.size-row .quantity button {
+    background-color: #444;
+    border: 1px solid #555;
+    color: white;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.size-row .quantity button:hover {
+    background-color: #666;
+}
+
+/* Input quantidade */
+.size-row .quantity input[type="text"] {
+    width: 50px;
+    text-align: center;
+    background-color: #333;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 5px;
+}
+
+
+.btn-img {
+    width: 400px;
+    height: 400px;
+    border: 2px dashed #007BFF;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #444;
+    position: relative;
+    transition: border-color 0.3s ease;
+    overflow: hidden;
+    color: #007BFF;
+    font-size: 5rem;
+    font-weight: 700;
+    user-select: none;
+}
+
+.btn-img.has-image {
+    border: none;
+    background-color: transparent;
+    color: transparent;
+    cursor: default;
+}
+
+.btn-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+.btn-img:hover {
+    background-color: #555;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(to bottom, #2D2C2C, #0000ff);
+    color: white;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 50px;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.footer-social a img {
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.footer-social a:hover img {
+    transform: scale(1.1);
+}
+
+.footer-logo img {
+    max-width: 120px;
+    height: auto;
+    transition: opacity 0.3s;
+}
+
+.footer-logo img:hover {
+    opacity: 0.7;
+}
+
+.footer-bottom {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.footer-terms a {
+    margin: 0 10px;
+    font-size: 13px;
+    color: white;
+    text-decoration: none;
+}
+
+.footer-terms a:hover {
+    text-decoration: underline;
+}
+
+input::placeholder {
+    color: #ccc !important;
+    opacity: 1 !important;
+}
