@@ -1,0 +1,263 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: #2D2C2C;
+    color: #ffffff;
+  }
+  
+  header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #2D2C2C;
+      color: #ffffff; 
+  }
+  
+  .img-fluid {
+      width: 50px;
+      height: 50px;
+  }
+  
+  nav {
+      flex-grow: 1;
+      display: flex;
+      justify-content: end;
+  }
+  
+  nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: end;
+      align-items: end;
+      margin: 0;
+      padding: 0;
+  }
+  
+  nav ul li {
+      margin: 0 15px;
+  }
+  
+  nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+  }
+  
+  nav ul li a:hover {
+      text-decoration: underline;
+  }
+  
+  .linha-topo-full {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, #000080, #00f);
+      margin-bottom: 10px;
+  }
+  
+  /* Main Content Area */
+  main {
+    flex-grow: 1; /* Faz com que o main ocupe o espaço restante, empurrando o footer para baixo */
+    padding-top: 20px; /* Espaçamento do topo */
+    padding-bottom: 20px; /* Espaçamento do fundo */
+  
+  }
+  
+  .container-form {
+    width: 100%; /* Ocupa a largura total do main */
+    max-width: 650px; /* Aumentado um pouco para acomodar o placeholder da imagem */
+    background-color: #2c2c2c; /* Cor de fundo do bloco principal */
+    border: 1px solid #007bff; /* Borda azul para o container principal */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 0; /* Torna o container quadrado */
+  }
+  
+  h1 {
+    font-size: 1.8em;
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
+  
+  /* Card Professor */
+  .card-professor {
+    background-color: #212121;
+    border: 1px solid #007bff; /* Borda azul clara para destaque */
+    border-radius: 0; /* Torna o card quadrado */
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .image-placeholder {
+    width: 200px; /* Largura do círculo */
+    height: 200px; /* Altura do círculo */
+  
+    border-radius: 50%; /* Torna o elemento circular */
+    color: #007bff; /* Cor do ícone de mais */
+    font-size: 2.5em; /* Tamanho do ícone de mais */
+    flex-shrink: 0; /* Impede que ele encolha em telas menores */
+  }
+  
+  .image-placeholder i {
+    opacity: 0.7; /* Suaviza o ícone de mais */
+  }
+  
+  .professor-details {
+    /* flex-grow-1 e w-100 do Bootstrap já ajudam */
+    margin-left: 0; /* Reset para mobile */
+  }
+  
+  
+  .card-professor .form-label {
+    color: #ccc;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+  }
+  
+  .card-professor .form-control {
+    background-color: #333;
+    border: 1px solid #555;
+    color: #eee;
+    margin-bottom: 15px;
+    border-radius: 0; /* Torna os inputs quadrados */
+  }
+  
+  .card-professor .form-control:focus {
+    background-color: #444;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Botões do grupo (Editar/Excluir) */
+  .btn-group-professor {
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 10px;
+  }
+  
+  .btn-adicionar-professor {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 0; /* Botão adicionar quadrado */
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .btn-adicionar-professor:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-editar {
+    background-color: #1ee300;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 0; /* Botão editar quadrado */
+    font-size: 0.85em;
+  }
+  
+  .btn-editar:hover {
+    background-color: #002516;
+  }
+  
+ 
+  
+  .footer {
+    background: linear-gradient(to bottom, #2D2C2C, #0000ff);
+    color: white;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 50px;
+    margin-left: 20px;
+    margin-top: 40px;
+  }
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .footer-links a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+   margin-left: 15px;
+  }
+  
+  .footer-social a img {
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+  
+  .footer-social a:hover img {
+    transform: scale(1.1);
+  }
+  
+  .footer-logo img {
+    max-width: 120px;
+    height: auto;
+    transition: opacity 0.3s;
+  }
+  
+  .footer-logo img:hover {
+    opacity: 0.7; 
+  }
+  
+  .footer-bottom {
+    margin-top: 5px;
+    text-align: center;
+  
+  }
+  
+  .footer-terms a {
+    margin: 0 10px;
+    font-size: 13px;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .footer-terms a:hover {
+    text-decoration: underline;
+  }

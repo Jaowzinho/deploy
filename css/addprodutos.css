@@ -1,26 +1,14 @@
-/* Reset e base */
-html,
-body {
-    height: 100%;
+/* Reset Básico */
+* {
     margin: 0;
     padding: 0;
-    background-color: #2D2C2C;
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
 }
 
-/* Estrutura principal */
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-input::placeholder {
-    color: #ccc;
-    /* ou qualquer cor visível */
-    opacity: 1;
-    /* garante que não fique transparente */
+    font-family: Arial, sans-serif;
+    background: #2D2C2C;
+    color: #ffffff;
 }
 
 header {
@@ -29,6 +17,7 @@ header {
     align-items: center;
     padding: 10px;
     background-color: #2D2C2C;
+    color: #ffffff;
 }
 
 .img-fluid {
@@ -61,6 +50,10 @@ nav ul li a {
     font-size: 18px;
 }
 
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
 .linha-topo-full {
     width: 100%;
     height: 2px;
@@ -68,252 +61,257 @@ nav ul li a {
     margin-bottom: 10px;
 }
 
-/* CONTEÚDO PRINCIPAL */
-.main-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #2D2C2C;
-    color: white;
+/* Main Content Area */
+main {
+    flex-grow: 1; /* Faz com que o main ocupe o espaço restante, empurrando o footer para baixo */
+    display: flex; /* TRANSFORMA MAIN EM UM FLEX CONTAINER */
+    justify-content: center; /* CENTRALIZA HORIZONTALMENTE O CONTEÚDO DO MAIN */
+    align-items: center; /* CENTRALIZA VERTICALMENTE O CONTEÚDO DO MAIN (se houver espaço suficiente) */
+    padding-top: 20px; /* Espaçamento do topo */
+    padding-bottom: 20px; /* Espaçamento do fundo */
 }
 
-/* Caixa de conteúdo do formulário */
-.content-box {
-    width: 100%;
-    margin: 0;
+.container-form {
+    width: 100%; /* Ocupa a largura total do main */
+    max-width: 700px; /* Ajustado para acomodar o card de produto */
+    background-color: #2c2c2c; /* Cor de fundo do bloco principal */
+    border: 1px solid #007bff; /* Borda azul para o container principal */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 0; /* Torna o container quadrado */
 }
 
-/* Títulos */
-h2,
-h3,
-label {
-    color: #ffffff;
-}
-
-/* Inputs e selects */
-input[type="text"],
-input[type="number"],
-textarea,
-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    color: #ffffff;
-}
-
-textarea {
-    resize: vertical;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-/* Botões */
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: white;
-}
-
-button.pesquisar {
-    background-color: #0066ff;
-    margin-left: 10px;
-}
-
-button.pesquisar:hover {
-    background-color: #0052cc;
-}
-
-button.adicionar {
-    background-color: #007BFF;
-    width: 100%;
-    margin-top: 20px;
-}
-
-button.adicionar:hover {
-    background-color: #0069d9;
-}
-
-button.remover-item {
-    background-color: #dc3545;
-    margin-right: 5px;
-}
-
-button.adicionar-item {
-    background-color: #28a745;
-}
-
-button.adicionar-item:hover {
-    background-color: #218838;
-}
-
-/* Produto com botão de quantidade */
-.produto-container {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    margin-bottom: 15px;
-    background-color: #2a2a2a;
-    border-radius: 5px;
-    padding: 10px;
-    color: white;
-    flex-wrap: wrap;
-}
-
-.produto-info {
-    flex: 1;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.quantidade-controls {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.quantidade-controls button {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    line-height: 0;
-}
-
-.quantidade-controls input {
-    width: 40px;
+h1 {
+    font-size: 1.8em;
+    font-weight: normal;
+    margin-bottom: 10px;
     text-align: center;
-    background-color: #444;
-    color: #fff;
-    border: 1px solid #666;
-    border-radius: 4px;
 }
 
-/* Imagem do produto */
-.produto-imagem {
-    width: 400px;
-    height: 400px;
-    background-color: #444;
-    border-radius: 6px;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-/* Seção de tamanhos dentro do produto */
-.product-sizes {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Cada linha de tamanho */
-.size-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-/* Label do tamanho */
-.size-label {
-    width: 50px;
-    flex-shrink: 0;
-}
-
-/* Input de preço */
-.size-row input[type="number"] {
-    width: 100px;
-    padding: 5px 8px;
-    background-color: #fff;
-    border: 1px solid #555;
-    border-radius: 5px;
-    color: black;
-    text-align: right;
-}
-
-/* Controles de quantidade (botões + input) */
-.size-row .quantity {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-/* Botões de quantidade estilizados */
-.size-row .quantity button {
-    background-color: #444;
-    border: 1px solid #555;
-    color: white;
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-.size-row .quantity button:hover {
-    background-color: #666;
-}
-
-/* Input quantidade */
-.size-row .quantity input[type="text"] {
-    width: 50px;
+.sub-header-text, .instruction-text {
+    font-size: 0.9em;
+    color: #ccc;
     text-align: center;
-    background-color: #333;
-    border: 1px solid #555;
-    color: white;
-    border-radius: 5px;
 }
 
+.sub-title {
+    font-size: 1.3em;
+    font-weight: bold; /* Deixa o "Escolha os modelos" em negrito */
+    margin-top: 25px; /* Espaçamento antes do subtítulo */
+    text-align: center; /* Centraliza o subtitulo */
+}
 
-.btn-img {
-    width: 400px;
-    height: 400px;
-    border: 2px dashed #007BFF;
-    border-radius: 6px;
+/* Card do Produto - ATUALIZADO */
+.card-produto {
+    background-color: #212121;
+    border: 1px solid #007bff; /* Borda azul clara para destaque */
+    border-radius: 0; /* Torna o card quadrado */
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.product-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: left; /* Alinha o nome à esquerda, como na imagem */
+    margin-bottom: 10px; /* Mais espaço abaixo do nome do produto */
+}
+
+/* --- ESTILOS PARA O UPLOAD DE IMAGEM (MODIFICADOS) --- */
+.product-image-section {
+    width: 250px; /* Largura da imagem do produto AUMENTADA */
+    height: 250px; /* Altura da imagem do produto AUMENTADA */
+    flex-shrink: 0;
+    position: relative;
+    border: 2px dashed #007bff; /* Borda tracejada para o placeholder */
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    background-color: #444;
-    position: relative;
-    transition: border-color 0.3s ease;
-    overflow: hidden;
-    color: #007BFF;
-    font-size: 5rem;
-    font-weight: 700;
-    user-select: none;
+    overflow: hidden; /* Garante que a imagem carregada fique dentro do limite */
+    cursor: pointer; /* Indica que é clicável */
 }
 
-.btn-img.has-image {
-    border: none;
-    background-color: transparent;
-    color: transparent;
-    cursor: default;
+.product-image-section .plus-icon-overlay {
+    position: absolute;
+    color: #007bff; /* Cor do ícone de mais */
+    font-size: 4em; /* Tamanho do ícone de mais */
+    z-index: 1; /* Garante que o ícone esteja acima da imagem (quando não carregada) */
+    opacity: 0.7;
 }
 
-.btn-img img {
+.product-image-section .product-thumbnail {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    user-select: none;
+    object-fit: cover; /* Garante que a imagem preencha a área sem distorcer */
+    position: absolute; /* Para que a imagem cubra o placeholder */
+    top: 0;
+    left: 0;
+    z-index: 0; /* Garante que a imagem esteja abaixo do ícone (quando ambos visíveis, mas o ícone será escondido) */
 }
 
+.image-action-buttons {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    gap: 5px;
+    z-index: 2; /* Garante que os botões fiquem acima da imagem */
+}
 
-.btn-img:hover {
+.image-action-buttons .btn {
+    width: 30px; /* Reduz o tamanho dos botões */
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em; /* Reduz o tamanho do ícone */
+    border-radius: 50%; /* Botões redondos */
+    padding: 0;
+}
+
+.image-action-buttons .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.image-action-buttons .btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+/* --- FIM DOS ESTILOS PARA O UPLOAD DE IMAGEM --- */
+
+
+.product-details {
+    flex-grow: 1; /* Permite que os detalhes do produto ocupem o espaço restante */
+    width: 100%; /* Garante que ocupe 100% da largura do pai flex no mobile */
+}
+
+.size-controls .d-flex {
+    align-items: center;
+    justify-content: space-between; /* Espaço entre os itens (tamanho, preço, quantidade) */
+    flex-wrap: nowrap; /* Evita quebras de linha indesejadas em telas maiores */
+    margin-bottom: 10px; /* Espaço entre as linhas de tamanho */
+}
+
+.size-label {
+    font-weight: bold;
+    color: #007bff; /* Azul para o tamanho */
+    min-width: 20px; /* Garante um tamanho mínimo para alinhamento */
+    text-align: left; /* Alinha à esquerda */
+}
+
+/* --- ESTILOS PARA O INPUT DE PREÇO --- */
+.price-input {
+    width: 100px; /* Largura fixa para o input de preço */
+    background-color: #333;
+    border: 1px solid #007bff; /* Borda azul para destaque */
+    color: #eee;
+    text-align: center; /* Centraliza o texto */
+    padding: 0.25rem 0.5rem;
+    border-radius: 0; /* Quadrado */
+    font-size: 0.9em;
+    flex-shrink: 0; /* Não permite que encolha */
+    margin-right: 15px; /* Espaço entre o preço e o controle de quantidade */
+}
+
+.price-input:focus {
+    background-color: #444;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+/* --- FIM DOS ESTILOS PARA O INPUT DE PREÇO --- */
+
+
+.quantity-control {
+    border: 1px solid #555;
+    border-radius: 5px;
+    overflow: hidden; /* Para que os botões e input fiquem dentro da borda */
+    display: flex;
+    width: 90px; /* Largura fixa para o controle de quantidade */
+}
+
+.quantity-control .btn {
+    border-radius: 0;
+    padding: 0.25rem 0.5rem; /* Ajusta padding */
+    font-size: 0.9em; /* Ajusta tamanho da fonte */
+    background-color: #444;
+    border-color: #555;
+    color: #eee;
+    width: 30px; /* Largura fixa para os botões +/- */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantity-control .btn:hover {
     background-color: #555;
+    border-color: #666;
 }
 
-/* Footer */
+.quantity-input {
+    width: 30px; /* Reduz a largura do input de quantidade */
+    background-color: #333;
+    border: none;
+    color: #eee;
+    text-align: center;
+    padding: 0.25rem 0;
+    -moz-appearance: textfield; /* Remove setas em Firefox */
+    appearance: textfield; /* Remove setas em outros browsers */
+}
+
+/* Remover setas de number input para WebKit (Chrome, Safari) */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.card-produto .form-label {
+    color: #ccc;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.card-produto .form-control {
+    background-color: #333;
+    border: 1px solid #007bff; /* Borda azul para destaque */
+    color: #eee;
+    margin-bottom: 15px;
+    border-radius: 0; /* Torna os inputs quadrados */
+}
+
+.card-produto .form-control:focus {
+    background-color: #444;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+/* ESTILOS PARA MELHORAR A LEITURA DO PLACEHOLDER */
+.card-produto .form-control::placeholder { /* Para a maioria dos navegadores */
+    color: #a0a0a0; /* Um cinza mais claro */
+    opacity: 1; /* Garante que não tenha opacidade baixa */
+}
+
+.card-produto .form-control::-webkit-input-placeholder { /* Para Webkit (Chrome, Safari) */
+    color: #a0a0a0;
+    opacity: 1;
+}
+
+.card-produto .form-control::-moz-placeholder { /* Para Firefox */
+    color: #a0a0a0;
+    opacity: 1;
+}
+
+.card-produto .form-control:-ms-input-placeholder { /* Para Internet Explorer 10+ */
+    color: #a0a0a0;
+    opacity: 1;
+}
+
+.card-produto .form-control::ms-input-placeholder { /* Para Microsoft Edge */
+    color: #a0a0a0;
+    opacity: 1;
+}
+
+
 .footer {
     background: linear-gradient(to bottom, #2D2C2C, #0000ff);
     color: white;
@@ -341,7 +339,6 @@ button.adicionar-item:hover {
     margin-left: 20px;
     margin-top: 40px;
 }
-
 .footer-links ul {
     list-style: none;
     padding: 0;
@@ -393,6 +390,7 @@ button.adicionar-item:hover {
 .footer-bottom {
     margin-top: 5px;
     text-align: center;
+
 }
 
 .footer-terms a {
@@ -406,7 +404,93 @@ button.adicionar-item:hover {
     text-decoration: underline;
 }
 
-input::placeholder {
-    color: #ccc !important;
-    opacity: 1 !important;
+/* Responsividade */
+@media (max-width: 767.98px) {
+
+
+    .container-form {
+        padding: 15px;
+        margin: 0 10px;
+    }
+
+    .card-produto {
+        text-align: center;
+    }
+
+    .card-produto .d-flex.flex-column.flex-md-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-image-section {
+        width: 200px; /* Ajuste para mobile */
+        height: 200px; /* Ajuste para mobile */
+    }
+
+    .image-action-buttons {
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .product-name {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .product-details {
+        text-align: left;
+        padding-left: 0;
+    }
+
+    .size-controls .d-flex {
+        justify-content: center;
+        flex-wrap: wrap; /* Permite que os itens quebrem linha se necessário */
+        gap: 5px; /* Adiciona um pequeno espaço entre os itens quando quebram */
+    }
+
+    /* Ajuste para que os inputs de preço e quantidade não fiquem muito apertados em mobile */
+    .price-input {
+        width: 120px; /* Permite mais largura */
+        margin-right: 5px; /* Reduz margem */
+    }
+    .quantity-control {
+        width: 100px; /* Permite mais largura */
+    }
+}
+
+@media (min-width: 768px) {
+    /* Desktop */
+    .container-form {
+        width: 80%;
+        max-width: 800px;
+    }
+
+    .card-produto .d-flex.flex-column.flex-md-row {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .product-image-section {
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+
+    .image-action-buttons {
+        left: 5px;
+        transform: none;
+    }
+
+    .product-name {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .product-details {
+        padding-left: 0;
+    }
+
+    .size-controls .d-flex {
+        justify-content: space-between;
+    }
 }

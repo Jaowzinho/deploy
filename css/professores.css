@@ -1,173 +1,192 @@
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #2D2C2C;
-    color: white;
-  }
-  header {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #2D2C2C;
+  color: #ffffff;
+}
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     background-color: #2D2C2C;
-  }
-  
-  .img-fluid{
+    color: #ffffff; 
+}
+
+.img-fluid {
     width: 50px;
     height: 50px;
-  }
-  
-  nav {
+}
+
+nav {
     flex-grow: 1;
     display: flex;
     justify-content: end;
-  }
-  nav ul {
+}
+
+nav ul {
     list-style: none;
     display: flex;
     justify-content: end;
     align-items: end;
     margin: 0;
     padding: 0;
-  }
-  nav ul li {
+}
+
+nav ul li {
     margin: 0 15px;
-  }
-  nav ul li a {
+}
+
+nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
-  }
-  
-  .linha-topo-full {
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(to right, #000080, #00f);
-      margin-bottom: 10px;
-  }
+}
 
+nav ul li a:hover {
+    text-decoration: underline;
+}
 
+.linha-topo-full {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #000080, #00f);
+    margin-bottom: 10px;
+}
+
+/* Main Content Area */
 main {
-  display: flex;
-  justify-content: center;
-  padding: 30px;
+  flex-grow: 1; /* Faz com que o main ocupe o espaço restante, empurrando o footer para baixo */
+  padding-top: 20px; /* Espaçamento do topo */
+  padding-bottom: 20px; /* Espaçamento do fundo */
+
 }
 
-.container {
-  background: #2a2a2a;
-  border: 2px solid #428bca;
-  border-radius: 10px;
-  padding: 30px;
-  width: 600px;
-}
-
-.container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 20px;
-  color: #ffffff;
-}
-
-
-.add-btn {
-  display: block;
-  margin: 0 auto 30px;
-  padding: 10px 20px;
-  background: #428bca;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-
-.form-group {
-  background: #1f1f1f;
+.container-form {
+  width: 100%; /* Ocupa a largura total do main */
+  max-width: 650px; /* Aumentado um pouco para acomodar o placeholder da imagem */
+  background-color: #2c2c2c; /* Cor de fundo do bloco principal */
+  border: 1px solid #007bff; /* Borda azul para o container principal */
   padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 0; /* Torna o container quadrado */
+}
+
+h1 {
+  font-size: 1.8em;
+  font-weight: normal;
   margin-bottom: 20px;
-  border-radius: 10px;
-  border: 1px solid #333;
+}
+
+/* Card Professor */
+.card-professor {
+  background-color: #212121;
+  border: 1px solid #007bff; /* Borda azul clara para destaque */
+  border-radius: 0; /* Torna o card quadrado */
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.image-placeholder {
+  width: 90px; /* Largura do círculo */
+  height: 90px; /* Altura do círculo */
+  border: 2px dashed #007bff; /* Borda tracejada azul */
+  border-radius: 50%; /* Torna o elemento circular */
+  color: #007bff; /* Cor do ícone de mais */
+  font-size: 2.5em; /* Tamanho do ícone de mais */
+  flex-shrink: 0; /* Impede que ele encolha em telas menores */
+}
+
+.image-placeholder i {
+  opacity: 0.7; /* Suaviza o ícone de mais */
+}
+
+.professor-details {
+  /* flex-grow-1 e w-100 do Bootstrap já ajudam */
+  margin-left: 0; /* Reset para mobile */
 }
 
 
-.image-upload-box {
-  width: 100px;
-  height: 100px;
-  background: #2D2C2C;
-  border: 2px dashed #428bca;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 15px;
-  overflow: hidden;
+.card-professor .form-label {
+  color: #ccc;
+  margin-bottom: 5px;
+  font-size: 0.9em;
 }
 
-.image-upload-box input[type="file"] {
-  display: none;
-}
-
-.image-upload-box img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 10px;
-}
-
-.image-upload-box span {
-  font-size: 24px;
-  color: #ffffff;
-}
-
-
-.form-group label {
-  display: block;
-  margin: 10px 0 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  background: #333;
+.card-professor .form-control {
+  background-color: #333;
   border: 1px solid #555;
-  color: #fff;
-  border-radius: 5px;
+  color: #eee;
+  margin-bottom: 15px;
+  border-radius: 0; /* Torna os inputs quadrados */
 }
 
-
-.btn-group {
-  margin-top: 15px;
-  text-align: right;
+.card-professor .form-control:focus {
+  background-color: #444;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
 }
 
-.edit-btn {
-  background: #3498db;
+/* Botões do grupo (Editar/Excluir) */
+.btn-group-professor {
+  gap: 10px; /* Espaço entre os botões */
+  margin-top: 10px;
+}
+
+.btn-adicionar-professor {
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 8px 12px;
-  margin-right: 10px;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 8px 15px;
+  border-radius: 0; /* Botão adicionar quadrado */
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.delete-btn {
-  background: #e74c3c;
+.btn-adicionar-professor:hover {
+  background-color: #0056b3;
+}
+
+.btn-editar {
+  background-color: #6c757d;
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 0; /* Botão editar quadrado */
+  font-size: 0.85em;
 }
 
-/* FOOTER */
+.btn-editar:hover {
+  background-color: #5a6268;
+}
+
+.btn-excluir {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 0; /* Botão excluir quadrado */
+  font-size: 0.85em;
+}
+
+.btn-excluir:hover {
+  background-color: #c82333;
+}
+
+
 .footer {
   background: linear-gradient(to bottom, #2D2C2C, #0000ff);
   color: white;
   padding: 10px;
+  font-family: Arial, sans-serif;
 }
 
 .footer-top {
@@ -190,7 +209,6 @@ main {
   margin-left: 20px;
   margin-top: 40px;
 }
-
 .footer-links ul {
   list-style: none;
   padding: 0;
@@ -215,7 +233,7 @@ main {
   display: flex;
   gap: 15px;
   margin-top: 10px;
-  margin-left: 15px;
+ margin-left: 15px;
 }
 
 .footer-social a img {
@@ -236,12 +254,13 @@ main {
 }
 
 .footer-logo img:hover {
-  opacity: 0.7;
+  opacity: 0.7; 
 }
 
 .footer-bottom {
   margin-top: 5px;
   text-align: center;
+
 }
 
 .footer-terms a {
@@ -253,4 +272,14 @@ main {
 
 .footer-terms a:hover {
   text-decoration: underline;
+}
+
+@media (min-width: 800px) and (max-width: 1500px) {
+  .banner {
+    height: 80vh; /* altura menor */
+  }
+
+  .banner img {
+    height: 100%; /* preenche a altura do container */
+  }
 }

@@ -63,11 +63,6 @@ p {
   color: white;
 }
 
-.card-um-reverse {
-  flex-direction: row-reverse;
-}
-
-
 .row > * {
   margin: auto;
   flex-shrink: 0;
@@ -212,14 +207,6 @@ p {
 .footer-terms a:hover {
   text-decoration: underline;
 }
-
-#produtos-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px 0;
-}
-
 
 @media (max-width: 728px) {
   .card-body p {

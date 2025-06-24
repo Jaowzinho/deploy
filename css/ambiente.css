@@ -213,7 +213,7 @@ nav ul li a {
   }
 }
 
-@media (min-width: 800px) and (max-width: 1114px) {
+@media (min-width: 800px) and (max-width: 1500px) {
   .banner {
     height: 50vh; /* altura menor */
   }

@@ -1,0 +1,309 @@
+/* carrinho.css */
+body {
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
+main.container {
+  background: rgba(0,0,0,0.85);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  padding: 32px 16px 24px 16px;
+  margin-top: 40px;
+}
+#carrinho-container .card {
+  background: #181828;
+  border: 1px solid #2D2C2C;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.18);
+  transition: box-shadow 0.2s, border 0.2s;
+}
+#carrinho-container .card:hover {
+  box-shadow: 0 4px 18px #0000ff44;
+  border: 1.5px solid #0000ff;
+}
+#carrinho-container .card-img-top {
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+  background: #222;
+}
+#carrinho-container .card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+#carrinho-container .card-text {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+.btn-remover {
+  background: #0000ff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 8px;
+}
+.btn-remover:hover {
+  background: #2D2C2C;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  main.container {
+    padding: 16px 2px 16px 2px;
+  }
+  #carrinho-container .card-img-top {
+    max-height: 120px;
+  }
+}
+
+/* Footer igual ao da index */
+.footer {
+    background: linear-gradient(to bottom, #2D2C2C, #0000ff);
+    color: white;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.footer-links {
+    display: flex;
+    gap: 50px;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-links li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.footer-links a {
+    color: white;
+    text-decoration: none;
+}
+.footer-links a:hover {
+    text-decoration: underline;
+}
+.footer-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+.footer-social a img {
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+.footer-social a:hover img {
+    transform: scale(1.1);
+}
+.footer-logo img {
+    max-width: 120px;
+    height: auto;
+    transition: opacity 0.3s;
+}
+.footer-logo img:hover {
+    opacity: 0.7;
+}
+.footer-bottom {
+    margin-top: 5px;
+    text-align: center;
+}
+.footer-terms a {
+    margin: 0 10px;
+    font-size: 13px;
+    color: white;
+    text-decoration: none;
+}
+.footer-terms a:hover {
+    text-decoration: underline;
+}
+
+/* Carrinho moderno */
+.carrinho-title {
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+.icon-cart {
+  font-size: 2.2rem;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.carrinho-list {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.carrinho-card {
+  background: #181828;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px #0000ff22;
+  display: flex;
+  align-items: center;
+  min-height: 140px;
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.2s;
+}
+.carrinho-card:hover {
+  box-shadow: 0 6px 24px #0000ff55;
+}
+.carrinho-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #222;
+  box-shadow: 0 1px 8px #0008;
+}
+.carrinho-produto-nome {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+.carrinho-produto-info {
+  font-size: 1rem;
+  color: #bfcfff;
+}
+.btn-remover-carrinho {
+  background: #0000ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px #0000ff33;
+}
+.btn-remover-carrinho:hover {
+  background: #2D2C2C;
+  color: #fff;
+}
+.carrinho-total {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: right;
+  margin-top: 1.5rem;
+}
+.carrinho-vazio {
+  padding: 40px 0 30px 0;
+  color: #fff;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+.icon-cart-vazio {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+@media (max-width: 768px) {
+  .carrinho-card {
+    flex-direction: column;
+    min-height: unset;
+    padding: 10px 0;
+  }
+  .carrinho-img {
+    width: 80px;
+    height: 80px;
+  }
+  .carrinho-title {
+    font-size: 1.5rem;
+  }
+  .carrinho-total {
+    font-size: 1.1rem;
+  }
+}
+
+/* Botão Home no carrinho */
+.carrinho-voltar {
+  margin-bottom: 10px;
+}
+.btn-home-carrinho img {
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px #0002;
+  border-radius: 8px;
+}
+.btn-home-carrinho:hover img {
+  box-shadow: 0 4px 16px #0004;
+  transform: scale(1.08);
+}
+
+/* Botão Home no header do carrinho */
+.btn-home-header img {
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px #0002;
+  border-radius: 8px;
+}
+.btn-home-header:hover img {
+  box-shadow: 0 4px 16px #0004;
+  transform: scale(1.08);
+}
+
+/* Centralizar menu do header do carrinho */
+header.container-fluid.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+header nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+header nav ul {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+header nav ul li a {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.13rem;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: background 0.18s, color 0.18s;
+}
+header nav ul li a:hover {
+  background: #0000ff;
+  color: #fff;
+  text-decoration: none;
+}
+@media (max-width: 600px) {
+  header nav ul {
+    gap: 12px;
+  }
+  header nav ul li a {
+    font-size: 1rem;
+    padding: 5px 8px;
+  }
+}
