@@ -1,60 +1,198 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tela Gerenciamento Professores</title>
-  <link rel="stylesheet" href="css/professores.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tela Gerenciamento Professores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/professores.css" />
 </head>
-
 <body>
-  <header class="container-fluid d-flex justify-content-between align-items-center">
-    <div class="img-fluid">
-      <img src="img/logo.png" alt="logoacademia" class="img-fluid" />
+    <header class="container-fluid d-flex justify-content-between align-items-center py-2">
+        <div class="header-logo">
+            <img src="img/logo.png" alt="logoacademia" class="img-fluid logo-header">
+        </div>
+        <nav>
+            <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
+                <li>
+                    <a href="adm.html">
+                        <img src="icones/Home.png" alt="Home" width="40" height="40">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="linha-topo-full"></div>
+
+    <main class="d-flex justify-content-center align-items-center py-4 px-3">
+        <div class="container-form">
+            <h1 class="text-white text-center mb-4">GERENCIAMENTO DE PROFESSORES</h1>
+
+            <button class="btn btn-primary btn-adicionar-professor mb-4 w-100 w-md-auto d-block mx-auto mx-md-0">
+                <a href="adicionarprofessor.html" style="text-decoration: none; color: #fff;">
+                    <i class="bi bi-plus-lg me-2"></i> ADICIONAR PROFESSOR
+                </a>
+            </button>
+
+            <div id="mensagem"></div>
+            <div id="professores-list"></div>
+        </div>
+    </main>
+
+    <div class="footer-area">
+      
+        <div class="footer-links">
+            <ul>
+                <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <ul>
+                <li><a href="gerenciarproduto.html">Gerenciar Produtos</a></li>
+                <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
+            </ul>
+        </div>
     </div>
-    <nav>
-      <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
-        <li class="">
-          <a href="adm.html">
-            <img src="icones/Home.png" alt="" width="40" height="40" />
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+        
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-left"></div>
+            <div class="footer-logo">
+                <img src="img/logo1.png" alt="Logo Otávio Pereira">
+            </div>
+        </div>
+        <div class="footer-bottom"></div>
+    </footer>
 
-  <div class="linha-topo-full"></div>
+    <script src="service/apiAdmin.js"></script>
+    <script>
+    function formatarTelefone(telefone) {
+        telefone = telefone.replace(/\D/g, "");
+        if (telefone.length === 11) {
+            return `(${telefone.substr(0, 2)}) ${telefone.substr(2, 5)}-${telefone.substr(7, 4)}`;
+        } else if (telefone.length === 10) {
+            return `(${telefone.substr(0, 2)}) ${telefone.substr(2, 4)}-${telefone.substr(6, 4)}`;
+        } else {
+            return telefone;
+        }
+    }
 
-  <main>
-    <section class="container">
-      <h2>GERENCIAMENTO DE PROFESSORES</h2>
-      <button class="add-btn">➕ Adicionar Professor</button>
-      <div id="professores-lista"></div>
-    </section>
-  </main>
+    async function carregarProfessores() {
+        const container = document.getElementById('professores-list');
+        container.innerHTML = '<div class="text-center text-white">Carregando professores...</div>';
+        try {
+            const professores = await apiAdmin.getProfessores();
+            if (!professores || professores.length === 0) {
+                container.innerHTML = '<div class="alert alert-info text-center">Nenhum professor cadastrado.</div>';
+                return;
+            }
+            container.innerHTML = "";
+            professores.forEach(professor => {
+                container.innerHTML += `
+                <div class="card-professor mb-4 d-flex flex-column flex-md-row align-items-center" data-id="${professor.id}">
+                    <div class="image-placeholder d-flex justify-content-center align-items-center mb-3 mb-md-0 me-md-4">
+                        ${professor.fotoPerfil ? 
+                            `<img src="${professor.fotoPerfil}" alt="Foto do Professor" class="rounded-circle" style="width:80px; height:80px; object-fit:cover;">`
+                            : `<i class="bi bi-person-circle" style="font-size: 3rem; color: #888;"></i>`
+                        }
+                    </div>
+                    <div class="professor-details flex-grow-1 w-100">
+                        <div class="mb-3">
+                            <label class="form-label">Nome:</label>
+                            <input type="text" class="form-control" value="${professor.nome}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email:</label>
+                            <input type="email" class="form-control" value="${professor.email}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Número:</label>
+                            <input type="text" class="form-control" value="${formatarTelefone(professor.telefone)}" readonly>
+                        </div>
+                        <div class="btn-group-professor d-flex flex-column flex-md-row justify-content-end">
+                            <button class="btn btn-secondary btn-editar mb-2 mb-md-0 me-md-2">Editar</button>
+                            <button class="btn btn-success btn-salvar mb-2 mb-md-0 me-md-2" style="display:none;">Salvar</button>
+                            <button class="btn btn-danger btn-excluir">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+            adicionarListenersProfessores();
+        } catch (error) {
+            container.innerHTML = '<div class="alert alert-danger text-center">Erro ao carregar professores.</div>';
+            console.error(error);
+        }
+    }
 
-  <footer class="footer">
-    <div class="footer-links">
-      <ul>
-        <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-      </ul>
-      <ul>
-        <li><a href="adicionarproduto.html">Adicionar Produtos</a></li>
-        <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
-      </ul>
-    </div>
-    <div class="footer-top">
-      <div class="footer-left"></div>
-      <div class="footer-logo">
-        <img src="img/logo1.png" alt="Logo Otávio Pereira">
-      </div>
-    </div>
-    <div class="footer-bottom"></div>
-  </footer>
+    function adicionarListenersProfessores() {
+        // Editar
+        document.querySelectorAll('.btn-editar').forEach(btn => {
+            btn.onclick = function() {
+                const card = btn.closest('.card-professor');
+                card.querySelectorAll('input').forEach(input => input.removeAttribute('readonly'));
+                card.querySelector('.btn-editar').style.display = 'none';
+                card.querySelector('.btn-salvar').style.display = '';
+            };
+        });
 
-  <script src="js/professores.js"></script>
+        // Salvar (Update)
+        document.querySelectorAll('.btn-salvar').forEach(btn => {
+            btn.onclick = async function() {
+                const card = btn.closest('.card-professor');
+                const id = card.getAttribute('data-id');
+                const inputs = card.querySelectorAll('input');
+                const nome = inputs[0].value.trim();
+                const email = inputs[1].value.trim();
+                let telefone = inputs[2].value.trim();
+                telefone = formatarTelefone(telefone);
+
+                if (!nome || !email || !telefone) {
+                    mostrarMensagem('Preencha todos os campos.', 'danger');
+                    return;
+                }
+
+                try {
+                    await apiAdmin.updateProfessor(id, { nome, email, telefone });
+                    mostrarMensagem('Professor atualizado com sucesso.', 'success');
+                    inputs.forEach(input => input.setAttribute('readonly', true));
+                    card.querySelector('.btn-editar').style.display = '';
+                    card.querySelector('.btn-salvar').style.display = 'none';
+                    inputs[2].value = telefone;
+                } catch (error) {
+                    mostrarMensagem('Erro ao atualizar professor.', 'danger');
+                    console.error(error);
+                }
+            };
+        });
+
+        // Excluir
+        document.querySelectorAll('.btn-excluir').forEach(btn => {
+            btn.onclick = async function() {
+                if (!confirm('Tem certeza que deseja excluir este professor?')) return;
+                const card = btn.closest('.card-professor');
+                const id = card.getAttribute('data-id');
+                try {
+                    await apiAdmin.deleteProfessor(id);
+                    card.remove();
+                    mostrarMensagem('Professor excluído com sucesso.', 'success');
+                } catch (error) {
+                    mostrarMensagem('Erro ao excluir professor.', 'danger');
+                    console.error(error);
+                }
+            };
+        });
+    }
+
+    function mostrarMensagem(msg, tipo) {
+        const mensagemEl = document.getElementById('mensagem');
+        mensagemEl.innerHTML = `<div class="alert alert-${tipo} text-center mt-3">${msg}</div>`;
+        setTimeout(() => { mensagemEl.innerHTML = ""; }, 3000);
+    }
+
+    // Carrega os professores ao abrir a página
+    carregarProfessores();
+    </script>
 </body>
-
 </html>

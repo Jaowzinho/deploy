@@ -9,18 +9,79 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/personal.css" />
+    <style>
+      .professores {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      
+        max-width: 600px;
+        margin: 40px auto 0 auto;
+        justify-content: center;
+        align-items: start;
+      }
+      .professor-card {
+        background: rgba(255,255,255,0.09);
+        padding: 18px 12px 16px 12px;
+        border-radius: 12px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 320px;
+        max-width: 260px;
+        margin: 0 auto;
+        box-shadow: 0 2px 14px 0 rgba(0,0,0,0.09);
+      }
+      .professor-foto {
+        width: 100px;
+        height: 10px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid #1366d6;
+        background: #fff;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
+      }
+      .professor-card h3 {
+        margin: 8px 0 12px 0;
+        color: #0af;
+        font-size: 1.18em;
+        font-weight: bold;
+      }
+      .professor-card .whatsapp-btn {
+        background: #25d366;
+        color: #fff;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 6px;
+        transition: background 0.2s;
+        font-size: 1em;
+      }
+      .professor-card .whatsapp-btn[disabled] {
+        background: #ccc;
+        color: #888;
+        cursor: default;
+      }
+      .professor-card .whatsapp-btn:hover:not([disabled]) {
+        background: #128c7e;
+      }
+      .professor-card .no-whatsapp {
+        color: #b3b3b3;
+        font-size: 0.87em;
+        margin-top: 8px;
+      }
+    </style>
   </head>
   <body>
-    <header
-      class="container-fluid d-flex justify-content-between align-items-center"
-    >
+    <header class="container-fluid d-flex justify-content-between align-items-center">
       <div class="img-fluid">
         <img src="img/logo.png" alt="logoacademia" class="img-fluid" />
       </div>
       <nav>
-        <ul
-          class="d-flex list-unstyled justify-content-center align-items-center m-0"
-        >
+        <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
           <li class=""><a href="index.html">Início</a></li>
           <li class=""><a href="ambiente.html">Sobre nós</a></li>
           <li class=""><a href="loja.html">Loja</a></li>
@@ -39,49 +100,10 @@
     </section>
 
     <main>
-      <h1 class="">PROFESSORES</h1>
-      <section class="professores">
-  <div class="professor-card">
-    <img src="img/professor3.jpeg" alt="Otavio" />
-    <h3>Otavio</h3>
-    <a href="https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1" target="_blank">
-      <button>Conversar com Professor</button>
-    </a>
-  </div>
-
-  <div class="professor-card">
-    <img src="img/professor1.jpeg" alt="Maria" />
-    <h3>João</h3>
-    <a href="https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1" target="_blank">
-      <button>Conversar com Professor</button>
-    </a>
-  </div>
-
-  <div class="professor-card">
-    <img src="img/professor2.jpeg" alt="Roberto" />
-    <h3>Roberto</h3>
-    <a href="https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1" target="_blank">
-      <button>Conversar com Professor</button>
-    </a>
-  </div>
-
-  <div class="professor-card">
-    <img src="img/professor4.jpeg" alt="Amanda" />
-    <h3>Pedro</h3>
-    <a href="https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1" target="_blank">
-      <button>Conversar com Professor</button>
-    </a>
-  </div>
-
-  <div class="professor-card">
-    <img src="img/professor5.jpeg" alt="Amanda" />
-    <h3>Lucas</h3>
-    <a href="https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1" target="_blank">
-      <button>Conversar com Professor</button>
-    </a>
-  </div>
-</section>
-
+    
+      <section class="professores" id="professores-list">
+        <!-- Cards dos professores serão renderizados via JS -->
+      </section>
     </main>
 
     <div class="footer-links">
@@ -95,13 +117,58 @@
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-left"></div>
-
         <div class="footer-logo">
           <img src="img/logo1.png" alt="Logo Otávio Pereira" />
         </div>
       </div>
-
       <div class="footer-bottom"></div>
     </footer>
+
+    <script>
+      const API_BASE_URL = "https://api-admin-8p0v.onrender.com";
+      // Link do WhatsApp da academia
+      const WHATSAPP_ACADEMIA = "https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1&app_absent=0";
+
+      async function getProfessores() {
+        const response = await fetch(`${API_BASE_URL}/professores`);
+        if (!response.ok) throw new Error("Erro ao buscar professores");
+        return await response.json();
+      }
+
+      function renderProfessorCard(professor) {
+        let foto = professor.fotoPerfil && professor.fotoPerfil.trim() !== ""
+          ? professor.fotoPerfil
+          : "img/professor_default.jpg";
+        let semFoto = !professor.fotoPerfil || professor.fotoPerfil.trim() === "";
+        const nome = professor.nome || "Professor";
+
+        // Todos os botões levam para o WhatsApp da academia
+        return `
+          <div class="professor-card">
+            <img src="${foto}" alt="${nome}" class="professor-foto${semFoto ? " sem-foto" : ""}" />
+            <h3>${nome}</h3>
+            <a href="${WHATSAPP_ACADEMIA}" target="_blank" rel="noopener">
+              <button class="whatsapp-btn">Conversar com Professor</button>
+            </a>
+          </div>
+        `;
+      }
+
+      async function renderProfessores() {
+        const container = document.getElementById("professores-list");
+        try {
+          const professores = await getProfessores();
+          if (!Array.isArray(professores) || professores.length === 0) {
+            container.innerHTML = `<p class="text-center">Nenhum professor cadastrado.</p>`;
+            return;
+          }
+          container.innerHTML = professores.map(renderProfessorCard).join("");
+        } catch (err) {
+          container.innerHTML = `<div class="alert alert-danger">Erro ao carregar professores.</div>`;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", renderProfessores);
+    </script>
   </body>
 </html>

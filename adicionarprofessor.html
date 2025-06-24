@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Adicionar Professor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/adicionar_professor.css" />
+    <style>
+        #imagePlaceholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #efefef;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        #uploadedImage {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        #plusIcon {
+            font-size: 2.5rem;
+            color: #888;
+            position: absolute;
+            left: 50%; top: 50%; transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <header class="container-fluid d-flex justify-content-between align-items-center py-2">
+        <div class="header-logo">
+            <img src="img/logo.png" alt="logoacademia" class="img-fluid logo-header">
+        </div>
+        <nav>
+            <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
+                <li>
+                    <a href="adm.html">
+                        <img src="icones/Home.png" alt="Home" width="40" height="40">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="linha-topo-full"></div>
+
+    <main class="d-flex justify-content-center align-items-center py-4 px-3">
+        <div class="container-form">
+            <h1 class="text-white text-center mb-4">ADICIONAR PROFESSOR</h1>
+            <div id="mensagem"></div>
+            <div class="card-professor mb-4 d-flex flex-column flex-md-row align-items-center">
+                <div class="image-placeholder d-flex justify-content-center align-items-center mb-3 mb-md-0 me-md-4" id="imagePlaceholder">
+                    <i class="bi bi-plus-circle-fill" id="plusIcon"></i>
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                    <img id="uploadedImage" src="#" alt="Imagem do Professor">
+                </div>
+                <div class="professor-details flex-grow-1 w-100">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome:</label>
+                        <input type="text" class="form-control" id="nome" placeholder="Nome do Professor">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" placeholder="professor@email.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numero" class="form-label">Número:</label>
+                        <input type="text" class="form-control" id="numero" placeholder="(XX) XXXXX-XXXX">
+                    </div>
+                    <div class="btn-group-professor d-flex flex-column flex-md-row justify-content-end">
+                        <button class="btn btn-primary btn-adicionar mb-2 mb-md-0 me-md-2" id="btnAdicionarProfessor">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="footer-area">
+        <div class="footer-links">
+            <ul>
+                <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <ul>
+                <li><a href="gerenciarproduto.html">Gerenciar Produtos</a></li>
+                <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
+            </ul>
+        </div>
+        <footer class="footer">
+            <div class="footer-top">
+                <div class="footer-left"></div>
+                <div class="footer-logo">
+                    <img src="img/logo1.png" alt="Logo Otávio Pereira">
+                </div>
+            </div>
+            <div class="footer-bottom"></div>
+        </footer>
+    </div>
+    <script>
+    // Clique para abrir o input file
+    document.getElementById('imagePlaceholder').addEventListener('click', function() {
+        document.getElementById('imageUpload').click();
+    });
+
+    // Preview da imagem
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('uploadedImage').src = e.target.result;
+            document.getElementById('uploadedImage').style.display = 'block';
+            document.getElementById('plusIcon').style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('btnAdicionarProfessor').addEventListener('click', async function(e) {
+        e.preventDefault();
+        const nome = document.getElementById('nome').value.trim();
+        const email = document.getElementById('email').value.trim();
+        let telefone = document.getElementById('numero').value.trim();
+        // Envia só números, se seu backend espera assim (ajuste se necessário)
+        telefone = telefone.replace(/\D/g, "");
+
+        const fileInput = document.getElementById('imageUpload');
+        const mensagemEl = document.getElementById('mensagem');
+        mensagemEl.innerHTML = '';
+
+        if (!nome || !email || !telefone || !fileInput.files[0]) {
+            mensagemEl.innerHTML = "<div class='alert alert-danger'>Preencha todos os campos obrigatórios!</div>";
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('nome', nome);
+            formData.append('email', email);
+            formData.append('telefone', telefone);
+            formData.append('fotoPerfil', fileInput.files[0]); // arquivo da imagem
+
+            const response = await fetch('https://api-admin-8p0v.onrender.com/professores', {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                let errorMsg = "Erro ao cadastrar professor.";
+                try {
+                    const erro = await response.json();
+                    if (erro && erro.message) errorMsg = erro.message;
+                    errorMsg += "<br>Detalhes: " + JSON.stringify(erro);
+                } catch (e) {
+                    errorMsg += "<br>Não foi possível ler detalhes do erro.";
+                }
+                throw new Error(errorMsg);
+            }
+            mensagemEl.innerHTML = "<div class='alert alert-success'>Professor cadastrado com sucesso!</div>";
+            // Limpa os campos
+            document.getElementById('nome').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('numero').value = "";
+            fileInput.value = "";
+            document.getElementById('uploadedImage').style.display = 'none';
+            document.getElementById('plusIcon').style.display = '';
+        } catch (error) {
+            mensagemEl.innerHTML = `<div class='alert alert-danger'>${error.message}</div>`;
+            console.error(error);
+        }
+    });
+    </script>
+</body>
+</html>

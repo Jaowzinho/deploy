@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gerenciar Produtos</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/gerenciar produtos.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/gerenciar_produtos.css" />
 </head>
-
 <body>
   <header class="container-fluid d-flex justify-content-between align-items-center">
     <div class="img-fluid">
-      <img src="img/logo.png" alt="logoacademia" class="img-fluid" />
+        <img src="img/logo.png" alt="logoacademia" class="img-fluid">
     </div>
     <nav>
-      <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
-        <li class="">
-          <a href="adm.html">
-            <img src="icones/Home.png" alt="" width="40" height="40" />
-          </a>
-        </li>
-      </ul>
+        <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
+            <li>
+              <a href="adm.html">
+                <img src="icones/Home.png" alt="Home" width="40" height="40" >
+              </a>
+            </li>
+        </ul>
     </nav>
   </header>
 
@@ -31,277 +29,201 @@
     <h2 class="text-white fw-bold">Gerenciar Produtos</h2>
     <p class="text-white-50">
       Nesta página você consegue gerenciar tudo relacionado aos seus produtos.
-      Adicione, edite e exclua seus produtos e seus respectivos modelos.
+      Adicione, exclua e visualize seus produtos e seus respectivos modelos.
     </p>
+
     <section class="bg-dark p-4 rounded mt-4">
+      <div class="mb-3">
+        <input type="text"
+               class="form-control"
+               id="searchInput"
+               placeholder="Pesquisar produto pelo nome..."
+               maxlength="30"
+               style="width: 320px;">
+      </div>
+      
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="text-white fw-semibold">Estoque de Produtos</h5>
-
-        <a href="adicionarproduto.html"><button class="btn btn-primary">Adicionar +</button></a>
-      </div>
-
-      <!-- Campo de busca geral -->
-      <div class="mb-3">
-        <input type="text" id="buscaProduto" class="form-control  text-dark border-secondary"
-          placeholder="Para pesquisar..." style="max-width: 300px" onfocus="this.style.color='white'"
-          onblur="if(this.value=='') this.style.color='';" />
+        <button class="btn btn-primary"> 
+          <a href="adicionarproduto.html" style="text-decoration: none; color: #fff;">Adicionar +</a>
+        </button>
       </div>
 
       <div class="table-responsive">
-        <table>
+        <table class="table text-white table-dark align-middle" id="produtosTable">
           <thead>
             <tr>
-              <th>Produto</th>
-              <th>Estoque Atual</th>
-              <th>Vendidos</th>
-              <th>Editar</th>
-              <th>Excluir</th>
+              <th>Nome</th>
+              <th>Tipo</th> <th>Preço</th>
+              <th>Estoque Total</th> <th>Vendidos</th>
+              <th>Descrição</th>
+              <th>Imagem</th>
+              <th>Ações</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="produtosTableBody">
             <tr>
-              <td>Camisa Preta</td>
-              <td>2025</td>
-              <td>1011</td>
-              <td><button class="btn-editar" onclick="abrirModal()">Editar</button></td>
-              <td><button class="btn-excluir">Excluir</button></td>
-            </tr>
-            <tr>
-              <td>Camisa Branca</td>
-              <td>1702</td>
-              <td>3408</td>
-              <td><button class="btn-editar" onclick="abrirModal()">Editar</button></td>
-              <td><button class="btn-excluir">Excluir</button></td>
-            </tr>
+              <td colspan="8" class="text-center">Carregando produtos...</td> </tr>
           </tbody>
         </table>
-        <!-- Modal -->
-        <!-- Modal -->
-        <div id="modalEditarProduto" class="modal-overlay">
-          <div class="modal-content">
-
-            <h2>Editar Produto</h2>
-
-            <div class="produto-container">
-
-              <!-- Imagem -->
-              <label class="btn-img" id="btnImgWrapper" title="Clique para carregar imagem">
-                <img src="icones/icone_adicionar.png" alt="Adicionar imagem" id="previewImagem" />
-              </label>
-
-
-              <!-- Infos do Produto -->
-              <div class="produto-info">
-
-                <!-- Tamanhos -->
-                <div class="product-sizes">
-                  <div class="size-row">
-                    <span class="size-label">P</span>
-                    <input type="number" step="0.01" placeholder="Preço" />
-                    <div class="quantity">
-                      <button>-</button>
-                      <input type="text" value="0" />
-                      <button>+</button>
-                    </div>
-                  </div>
-
-                  <div class="size-row">
-                    <span class="size-label">M</span>
-                    <input type="number" step="0.01" placeholder="Preço" />
-                    <div class="quantity">
-                      <button>-</button>
-                      <input type="text" value="0" />
-                      <button>+</button>
-                    </div>
-                  </div>
-
-                  <div class="size-row">
-                    <span class="size-label">G</span>
-                    <input type="number" step="0.01" placeholder="Preço" />
-                    <div class="quantity">
-                      <button>-</button>
-                      <input type="text" value="0" />
-                      <button>+</button>
-                    </div>
-                  </div>
-
-                  <div class="size-row">
-                    <span class="size-label">GG</span>
-                    <input type="number" step="0.01" placeholder="Preço" />
-                    <div class="quantity">
-                      <button>-</button>
-                      <input type="text" value="0" />
-                      <button>+</button>
-                    </div>
-                  </div>
-
-                  <div class="size-row">
-                    <span class="size-label">EXG</span>
-                    <input type="number" step="0.01" placeholder="Preço" />
-                    <div class="quantity">
-                      <button>-</button>
-                      <input type="text" value="0" />
-                      <button>+</button>
-                    </div>
-                  </div>
-
-                  <div class="size-row">
-                    <span class="size-label">EX1</span>
-                    <input type="number" step="0.01" placeholder="Preço" />
-                    <div class="quantity">
-                      <button>-</button>
-                      <input type="text" value="0" />
-                      <button>+</button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <!-- Nome e Descrição -->
-              <input type="text" placeholder="Nome do produto" />
-              <input type="text" placeholder="Descrição do produto" />
-
-              <!-- Botão Salvar -->
-              <button class="adicionar">Salvar Alterações</button>
-              <!-- Botão Fechar -->
-              <button onclick="fecharModal()" class="remover-item" style="margin-top: 10px;">Fechar</button>
-            </div>
-
-
-          </div>
-        </div>
-
-      </div>
-      </div>
-
       </div>
     </section>
   </main>
 
   <div class="footer-links">
-    <ul>
-      <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
-      <li><a href="dashboard.html">Dashboard</a></li>
-    </ul>
-    <ul>
-      <li><a href="adicionarproduto.html">Adicionar Produtos</a></li>
-      <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
-    </ul>
-  </div>
-
-  <footer class="footer">
-    <div class="footer-top">
-      <div class="footer-left"></div>
-
-      <div class="footer-logo">
-        <img src="img/logo1.png" alt="Logo Otávio Pereira" />
-      </div>
+      <ul>
+        <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+      <ul>
+        <li><a href="gerenciarproduto.html">Gerenciar Produtos</a></li>
+        <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
+      </ul>
     </div>
 
+<footer class="footer">
+    <div class="footer-top">
+      <div class="footer-left"></div>
+      <div class="footer-logo">
+        <img src="img/logo1.png" alt="Logo Otávio Pereira">
+      </div>
+    </div>
     <div class="footer-bottom"></div>
-  </footer>
+</footer>
 
-  <script>
-    // Função para filtrar a tabela
-    document
-      .getElementById("buscaProduto")
-      .addEventListener("input", function () {
-        const filtro = this.value.toLowerCase();
-        const linhas = document.querySelectorAll("#tabelaProdutos tbody tr");
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const API_BASE_URL = 'https://api-admin-8p0v.onrender.com';
 
-        linhas.forEach((linha) => {
-          const produto = linha.cells[0].textContent.toLowerCase();
-          const estoque = linha.cells[1].textContent.toLowerCase();
-          const vendidos = linha.cells[2].textContent.toLowerCase();
-
-          if (
-            produto.includes(filtro) ||
-            estoque.includes(filtro) ||
-            vendidos.includes(filtro)
-          ) {
-            linha.style.display = "";
-          } else {
-            linha.style.display = "none";
+  // --- apiAdmin object (as provided, ensure it's loaded before this script) ---
+  window.apiAdmin = {
+      // ... (your existing getProfessores, addProfessor, etc. functions)
+      getProdutos: async () => {
+          try {
+              const response = await fetch(`${API_BASE_URL}/produtos`);
+              if (!response.ok) {
+                  const errorText = await response.text(); // Get raw error text
+                  throw new Error(`Erro HTTP ao buscar produtos: ${response.status} - ${response.statusText}. Detalhes: ${errorText}`);
+              }
+              return await response.json();
+          } catch (error) {
+              console.error('Erro na função getProdutos:', error);
+              throw error; // Re-throw to be caught by carregarProdutos
           }
-        });
-      });
-  </script>
-
-  <script>
-    // Função para carregar imagem no modal
-    function carregarImagem(event) {
-      const preview = document.getElementById("previewImagem");
-      const btnImgWrapper = document.getElementById("btnImgWrapper");
-      const inputFile = event.target;
-
-      if (inputFile.files && inputFile.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          preview.src = e.target.result;
-        };
-        reader.readAsDataURL(inputFile.files[0]);
+      },
+      deleteProduto: async (id) => {
+          try {
+              const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
+                  method: 'DELETE',
+              });
+              if (!response.ok) {
+                  const errorText = await response.text();
+                  throw new Error(`Erro HTTP ao excluir produto: ${response.status} - ${response.statusText}. Detalhes: ${errorText}`);
+              }
+              // API returns 204 No Content for successful deletion, no JSON to parse
+              return true; 
+          } catch (error) {
+              console.error(`Erro na função deleteProduto (ID: ${id}):`, error);
+              throw error; // Re-throw to be caught by excluirProduto
+          }
       }
+      // ... (other product-related functions like getProdutoById, addProduto, updateProduto, etc.)
+  };
+
+  let produtosCache = [];
+
+  function renderProdutosTable(produtos) {
+    const tbody = document.getElementById('produtosTableBody');
+    if (!produtos || produtos.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" class="text-center">Nenhum produto encontrado.</td></tr>`;
+      return;
     }
 
-    // Criar um input file escondido dinamicamente e anexar ao label
-    document.addEventListener("DOMContentLoaded", () => {
-      const label = document.getElementById("btnImgWrapper");
-      const inputFile = document.createElement("input");
-      inputFile.type = "file";
-      inputFile.accept = "image/*";
-      inputFile.style.display = "none";
-      inputFile.id = "inputImagem";
-      inputFile.addEventListener("change", carregarImagem);
-      label.after(inputFile);
+    tbody.innerHTML = ""; // Clear existing rows
 
-      label.addEventListener("click", () => {
-        inputFile.click();
-      });
+    produtos.forEach(produto => {
+      const tr = document.createElement('tr');
+
+      // Determine stock and size display based on product type
+      let estoqueDisplay = '-';
+      let tipoDisplay = produto.tipo || '-'; // Display product type
+
+      if (produto.tipo === 'SEMTAMANHO') {
+          estoqueDisplay = produto.estoque !== null && produto.estoque !== undefined ? produto.estoque : '-';
+      } else if (produto.tipo === 'COMTAMANHO' && produto.estoquePorTamanho) {
+          const tamanhos = Object.keys(produto.estoquePorTamanho).sort(); // Sort sizes for consistent display
+          const estoqueDetalhes = tamanhos.map(t => `${t}: ${produto.estoquePorTamanho[t]}`).join('<br>');
+          estoqueDisplay = `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${estoqueDetalhes}">${produto.estoqueTotal ?? '-'} (ver detalhes)</span>`;
+      } else {
+          estoqueDisplay = produto.estoqueTotal ?? '-'; // Fallback for total stock if 'tipo' is missing or unknown
+      }
+
+
+      tr.innerHTML = `
+        <td>${produto.nome || '-'}</td>
+        <td>${tipoDisplay}</td>
+        <td>R$ ${produto.preco ? parseFloat(produto.preco).toFixed(2).replace('.', ',') : '0,00'}</td>
+        <td>${estoqueDisplay}</td>
+        <td>${produto.totalVendido ?? 0}</td>
+        <td>${produto.descricao || ''}</td>
+        <td>
+          <img src="${produto.img || 'img/Imgproduto.jpg'}" alt="Imagem do produto" style="max-width:80px; height:auto; border-radius:4px; border:1px solid #555;">
+        </td>
+        <td>
+          <button class="btn btn-sm btn-danger" onclick="excluirProduto('${produto.id}')">Excluir</button>
+          </td>
+      `;
+      tbody.appendChild(tr);
     });
 
-    // Controle de quantidade dos botões + e -
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll(".quantity").forEach((qty) => {
-        const btnMinus = qty.querySelector("button:first-child");
-        const btnPlus = qty.querySelector("button:last-child");
-        const input = qty.querySelector("input");
-
-        btnPlus.addEventListener("click", () => {
-          let value = parseInt(input.value) || 0;
-          value++;
-          input.value = value;
-        });
-
-        btnMinus.addEventListener("click", () => {
-          let value = parseInt(input.value) || 0;
-          if (value > 0) {
-            value--;
-            input.value = value;
-          }
-        });
-      });
+    // Initialize tooltips after rendering the table
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
     });
+  }
 
-    // Função para fechar modal (você pode usar o botão já existente)
-    function fecharModal() {
-      const modal = document.getElementById("modalEditarProduto");
-      if (modal) modal.style.display = "none";
+  async function carregarProdutos() {
+    try {
+      document.getElementById('produtosTableBody').innerHTML = `<tr><td colspan="8" class="text-center">Carregando produtos...</td></tr>`;
+      const produtos = await window.apiAdmin.getProdutos();
+      produtosCache = produtos; // Cache the fetched products
+      renderProdutosTable(produtos);
+    } catch (error) {
+      console.error("Erro ao carregar produtos:", error);
+      document.getElementById('produtosTableBody').innerHTML = `<tr><td colspan="8" class="text-danger text-center">Erro ao carregar produtos. ${error.message}</td></tr>`;
     }
+  }
 
-  </script>
-
-  <script>
-    function abrirModal() {
-      document.getElementById('modalEditarProduto').style.display = 'flex';
+  window.excluirProduto = async function(id) {
+    if (!confirm("Tem certeza que deseja excluir este produto? Esta ação não pode ser desfeita.")) {
+      return;
     }
-
-    function fecharModal() {
-      document.getElementById('modalEditarProduto').style.display = 'none';
+    try {
+      await window.apiAdmin.deleteProduto(id);
+      alert("Produto excluído com sucesso!");
+      carregarProdutos(); // Reload products after deletion
+    } catch (err) {
+      console.error("Erro ao excluir produto:", err);
+      alert(`Erro ao excluir produto: ${err.message}`);
     }
-  </script>
+  };
 
+  // --- Search Filter ---
+  document.addEventListener('DOMContentLoaded', function() {
+    carregarProdutos(); // Initial load
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function() {
+      const termo = searchInput.value.trim().toLowerCase();
+      const filtrados = produtosCache.filter(produto => 
+        (produto.nome || '').toLowerCase().includes(termo) ||
+        (produto.descricao || '').toLowerCase().includes(termo)
+        // You can add more fields to search by, e.g., product.tipo
+      );
+      renderProdutosTable(filtrados);
+    });
+  });
+</script>
 </body>
-
 </html>

@@ -1,74 +1,320 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Montagem de Treino</title>
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/carrossel_loja.css" />
-  </head>
-  <body>
-    <header class="container-fluid d-flex justify-content-between align-items-center">
-      <div class="img-fluid">
-        <img src="img/logo.png" alt="logoacademia" class="img-fluid" style="max-height: 50px;" />
-      </div>
-      <nav>
-        <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
-          <li><a href="index.html">Início</a></li>
-          <li><a href="personal.html">Professores</a></li>
-          <li><a href="sobre_nos.html">Sobre Nós</a></li>
-        </ul>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Montagem de Treino</title>
 
-    <div class="linha-topo-full"></div>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <h2 id="titulo-pagina" class="section-title text-center fw-bold text-uppercase fs-4">
-      <!-- será preenchido via JS -->
-    </h2>
+  <!-- Seus estilos -->
+  <link rel="stylesheet" href="css/carrossel_loja.css" />
+  <style>
+    .form-select {
+      padding: 5px 10px !important;
+      font-size: 16px !important;
+      border: 1px solid #00aaff !important;
+      background-color: #1e1e1e !important;
+      color: white !important;
+      margin-top: 5px !important;
+      border-radius: 10px !important;
+    }
 
-    <main>
-<main>
-  <div class="container-fluid text-center my-4">
-    <img id="imagem-produto"  alt="Imagem Produto" class="img-fluid rounded produto" />
-  </div>
+    .btn-verde {
+      background-color: #30F03F !important;
+      border-color: #30F03F !important;
+      color: #000000 !important;
+      /* texto preto para contraste */
+    }
 
+    .btn-verde:hover,
+    .btn-verde:focus {
+      background-color: #28c337 !important;
+      border-color: #28c337 !important;
+      color: #000000 !important;
+      box-shadow: 0 0 5px #28c337;
+    }
+  </style>
+</head>
 
-      <div class="container-descricao text-center">
-        <h2 id="nome-produto"></h2>
-        <p id="descricao-produto"></p>
-        <p><strong>Tamanho:</strong> <span id="tamanho-produto"></span></p>
-
-        <div class="preco" id="preco-produto"></div>
-
-        <button class="btn btn-primary mt-3">Reservar</button>
-      </div>
-    </main>
-
-    <div class="footer-links">
-      <ul>
-        <li><a href="suporte.html">Suporte</a></li>
-        <li><a href="sobre_nos.html">Sobre Nós</a></li>
-        <li><a href="personal.html">Professores</a></li>
-      </ul>
+<body>
+  <header class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="img-fluid">
+      <img src="img/logo.png" alt="logoacademia" class="img-fluid" style="max-height: 50px;" />
     </div>
+    <nav>
+      <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="personal.html">Professores</a></li>
+        <li><a href="sobre_nos.html">Sobre Nós</a></li>
+      </ul>
+    </nav>
+    <a href="carrinho.html" class="btn-carrinho-header ms-3" title="Ver carrinho">
+      <span class="icon-carrinho">🛒</span>
+    </a>
+  </header>
 
-    <footer class="footer">
-      <div class="footer-top">
-        <div class="footer-left"></div>
-        <div class="footer-logo">
-          <img src="img/logo1.png" alt="Logo Otávio Pereira" />
+  <div id="modal-reserva" class="modal-reserva-bg" style="display:none;">
+    <div class="modal-reserva-box">
+      <h3 class="modal-reserva-titulo">Resumo do Pedido</h3>
+      <div class="modal-reserva-produto-row">
+        <div class="modal-reserva-produto-info">
+          <div class="modal-reserva-produto" id="modal-produto-nome"></div>
+          <div class="modal-reserva-tamanho" id="modal-produto-tamanho"></div>
+          <div class="modal-reserva-qtd-row">
+            <button id="btn-qtd-menos" class="btn-qtd">-</button>
+            <span id="modal-qtd">1</span>
+            <button id="btn-qtd-mais" class="btn-qtd">+</button>
+          </div>
+          <div class="modal-reserva-subpreco-row">
+            <span class="modal-reserva-sub-label">SubTotal:</span>
+            <span class="modal-reserva-preco-info">
+              <span class="modal-preco-de">DE <span id="modal-preco-de"></span></span>
+              <span class="modal-preco-por" id="modal-preco-por"></span>
+            </span>
+          </div>
+        </div>
+        <div class="modal-preco-sub">
+          <span id="modal-subtotal"></span>
         </div>
       </div>
-      <div class="footer-bottom"></div>
-    </footer>
+      <div class="modal-reserva-msg"><i>Ao concluir a Reserva do produto, só podera retirar na loja!!</i></div>
+      <button id="btn-confirmar-reserva" class="btn-modal-confirmar">CONFIRMAR</button>
+      <button id="btn-fechar-modal" class="btn-modal-fechar">X</button>
+    </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="service/produto.js"></script>
-  </body>
+  <div class="linha-topo-full"></div>
+
+  <h2 class="section-title text-center fw-bold text-uppercase fs-4" id="nome-produto">
+    Carregando...
+  </h2>
+
+  <main>
+    <div class="container-fluid text-center my-4">
+      <img src="img/placeholder.png" alt="Imagem Produto" class="img-fluid rounded produto" id="img-produto" />
+    </div>
+
+    <div class="container-descricao">
+      <h2 id="titulo-produto">Carregando título...</h2>
+      <p id="descricao-produto">Carregando descrição...</p>
+
+      <div class="preco" id="preco-produto">R$0,00 <i>(cada)</i> <b>NO BOLETO OU PIX</b></div>
+
+      <!-- Div com id para controlar a visibilidade -->
+      <div id="tamanho-container">
+        <label for="tamanho">Escolha seu tamanho:</label><br />
+        <select id="tamanho" name="tamanho" class="form-select w-auto d-inline-block">
+          <!-- Opções carregadas dinamicamente -->
+        </select>
+      </div>
+
+      <button id="btnReservar" class="btn btn-verde mt-3">Reservar</button>
+    </div>
+  </main>
+
+  <div class="footer-links">
+    <ul>
+      <li><a href="suporte.html">Suporte</a></li>
+      <li><a href="sobre_nos.html">Sobre Nós</a></li>
+      <li><a href="personal.html">Professores</a></li>
+    </ul>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-left"></div>
+      <div class="footer-logo">
+        <img src="img/logo1.png" alt="Logo Otávio Pereira" />
+      </div>
+    </div>
+    <div class="footer-bottom"></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="service/apiAdmin.js"></script>
+  <script>
+    // Função para obter parâmetro da URL
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Buscar id do produto da URL
+    const produtoId = getQueryParam('id');
+    let quantidade = 1; // Pode ser ajustado para pegar de um input se desejar
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const reservarBtn = document.querySelector('.container-descricao button');
+      if (reservarBtn) {
+        reservarBtn.addEventListener('click', async function () {
+          // Preencher dados do modal
+          const nome = document.querySelector('.container-descricao h2').innerText;
+          const tamanho = document.getElementById('tamanho').value;
+          const preco = 14.90; // Troque para valor real se necessário
+          const precoDe = 17.00; // Troque para valor real se necessário
+          let qtd = 1;
+          document.getElementById('modal-produto-nome').innerText = nome;
+          document.getElementById('modal-produto-tamanho').innerText = 'Tamanho: ' + tamanho;
+          document.getElementById('modal-qtd').innerText = qtd;
+          document.getElementById('modal-preco-de').innerText = 'R$' + precoDe.toFixed(2);
+          document.getElementById('modal-preco-por').innerText = 'R$' + preco.toFixed(2);
+          document.getElementById('modal-subtotal').innerText = 'R$ ' + (preco * qtd).toFixed(2);
+          document.getElementById('modal-reserva').style.display = 'flex';
+
+          // Esconder o preço da página de fundo
+          const precoDiv = document.querySelector('.preco');
+          if (precoDiv) precoDiv.style.visibility = 'hidden';
+
+          // Handlers de quantidade
+          document.getElementById('btn-qtd-menos').onclick = function () {
+            if (qtd > 1) {
+              qtd--;
+              document.getElementById('modal-qtd').innerText = qtd;
+              document.getElementById('modal-subtotal').innerText = 'R$ ' + (preco * qtd).toFixed(2);
+            }
+          };
+          document.getElementById('btn-qtd-mais').onclick = function () {
+            qtd++;
+            document.getElementById('modal-qtd').innerText = qtd;
+            document.getElementById('modal-subtotal').innerText = 'R$ ' + (preco * qtd).toFixed(2);
+          };
+          document.getElementById('btn-fechar-modal').onclick = function () {
+            document.getElementById('modal-reserva').style.display = 'none';
+            // Mostrar o preço da página de fundo novamente
+            const precoDiv = document.querySelector('.preco');
+            if (precoDiv) precoDiv.style.visibility = 'visible';
+          };
+          document.getElementById('btn-confirmar-reserva').onclick = async function () {
+            try {
+              await window.apiAdmin.reservarProduto(produtoId, qtd);
+              let carrinho = JSON.parse(localStorage.getItem('carrinhoReservas') || '[]');
+              const idx = carrinho.findIndex(item => item.id === produtoId);
+              if (idx >= 0) {
+                carrinho[idx].quantidade += qtd;
+              } else {
+                carrinho.push({ id: produtoId, quantidade: qtd });
+              }
+              localStorage.setItem('carrinhoReservas', JSON.stringify(carrinho));
+              document.getElementById('modal-reserva').style.display = 'none';
+              // Mostrar o preço da página de fundo novamente
+              const precoDiv = document.querySelector('.preco');
+              if (precoDiv) precoDiv.style.visibility = 'visible';
+              window.location.href = `confirmaragendamento.html?id=${produtoId}&quantidade=${qtd}`;
+            } catch (error) {
+              alert('Erro ao reservar produto: ' + error.message);
+            }
+          };
+        });
+      }
+    });
+  </script>
+  <script>
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      document.body.innerHTML = '<h2 style="text-align:center;margin-top:50px;">Você precisa estar logado para acessar esta página.</h2><div style="text-align:center;"><a href="index.html">Voltar ao login</a></div>';
+      throw new Error('Acesso não autenticado');
+    }
+  </script>
+
+  <script type="module">
+    function getIdProduto() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    async function buscarProdutoPorId(id) {
+      try {
+        const resposta = await fetch(`https://api-admin-8p0v.onrender.com/produtos/${id}`);
+        if (!resposta.ok) throw new Error('Produto não encontrado');
+        return await resposta.json();
+      } catch (error) {
+        console.error('Erro ao buscar produto:', error);
+        return null;
+      }
+    }
+
+    function preencherPagina(produto) {
+      if (!produto) {
+        document.body.innerHTML = `
+          <h2 style="text-align:center;margin-top:50px;">Produto não encontrado.</h2>
+          <div style="text-align:center;"><a href="loja.html" class="btn btn-secondary mt-3">Voltar para loja</a></div>
+        `;
+        return;
+      }
+
+      document.getElementById('nome-produto').textContent = produto.nome;
+      document.getElementById('titulo-produto').textContent = produto.nome.toUpperCase();
+
+      const img = document.getElementById('img-produto');
+      img.src = produto.img;
+      img.alt = produto.nome;
+
+      document.getElementById('descricao-produto').textContent = produto.descricao;
+
+      document.getElementById('preco-produto').innerHTML = `R$${produto.preco.toFixed(2)} <i>(cada)</i> <b>NO BOLETO OU PIX</b>`;
+
+      const tamanhoContainer = document.getElementById('tamanho-container');
+      const selectTamanho = document.getElementById('tamanho');
+
+      if (produto.tipo === 'SEMTAMANHO') {
+        // Oculta a div de tamanho
+        tamanhoContainer.style.display = 'none';
+      } else {
+        // Mostra a div e popula o select
+        tamanhoContainer.style.display = 'block';
+        selectTamanho.innerHTML = '';
+
+        if (produto.tipo === 'COMTAMANHO' && produto.estoquePorTamanho) {
+          let temEstoque = false;
+          for (const tamanho in produto.estoquePorTamanho) {
+            if (produto.estoquePorTamanho[tamanho] > 0) {
+              const option = document.createElement('option');
+              option.value = tamanho;
+              option.textContent = `Tamanho: ${tamanho}`;
+              selectTamanho.appendChild(option);
+              temEstoque = true;
+            }
+          }
+          if (!temEstoque) {
+            const option = document.createElement('option');
+            option.disabled = true;
+            option.textContent = 'Sem estoque disponível';
+            selectTamanho.appendChild(option);
+            selectTamanho.disabled = true;
+          } else {
+            selectTamanho.disabled = false;
+          }
+        } else {
+          ['P', 'M', 'G', 'GG'].forEach(tam => {
+            const option = document.createElement('option');
+            option.value = tam;
+            option.textContent = `Tamanho: ${tam}`;
+            selectTamanho.appendChild(option);
+          });
+          selectTamanho.disabled = false;
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const id = getIdProduto();
+      if (!id) {
+        document.body.innerHTML = `
+          <h2 style="text-align:center;margin-top:50px;">Produto não especificado.</h2>
+          <div style="text-align:center;"><a href="loja.html" class="btn btn-secondary mt-3">Voltar para loja</a></div>
+        `;
+        return;
+      }
+
+      const produto = await buscarProdutoPorId(id);
+      preencherPagina(produto);
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

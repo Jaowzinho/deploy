@@ -22,27 +22,22 @@
     </div>
   </header>
 
-  <!-- Overlay -->
   <div class="overlay" id="overlay"></div>
 
-  <!-- Pop-up de login -->
   <div class="login-popup" id="loginPopup">
     <h2>LOGIN</h2>
     <form>
       <label for="Email">Email</label>
-      <input type="text" id="Email" placeholder="Digite seu Email" required />
+      <input type="email" id="Email" placeholder="Digite seu Email" required />
 
       <label for="password">Senha</label>
       <input type="password" id="password" placeholder="Digite sua senha" required />
 
       <a href="#" class="forgot-password">Esqueci senha</a>
-
       <button type="button" class="login-btn" id="loginBtn">Login</button>
     </form>
   </div>
 
-
-  <!-- Pop-up de verificação de código -->
   <div class="login-popup" id="verificacaoCodigoPopup">
     <p class="verificacao-titulo">Recuperar senha email</p>
     <h2 class="verificacao-subtitulo">Digite o Código</h2>
@@ -55,9 +50,24 @@
       <input type="text" maxlength="1" class="codigo" />
     </div>
 
-    <button type="button" class="btn-enviar-codigo" id="enviarCodigoBtn">Enviar</button>
+    <button type="button" class="btn-enviar-codigo" id="enviarCodigoBtnLogin">Enviar</button>
   </div>
-  <!-- Novo Pop-up: solicitar email para recuperar senha -->
+
+  <div class="login-popup" id="verificacaoCodigoPopupSenha">
+    <p class="verificacao-titulo">Recuperar senha email</p>
+    <h2 class="verificacao-subtitulo">Digite o Código</h2>
+    <p class="verificacao-texto">Acabamos de enviar um código para seu e-mail</p>
+
+    <div class="codigo-inputs" id="codigo-inputs">
+      <input type="text" maxlength="1" class="codigo" id="campo1" />
+      <input type="text" maxlength="1" class="codigo" id="campo2" />
+      <input type="text" maxlength="1" class="codigo" id="campo3" />
+      <input type="text" maxlength="1" class="codigo" id="campo4" />
+    </div>
+
+    <button type="button" class="btn-enviar-codigo" id="enviarCodigoBtnSenha">Enviar</button>
+  </div>
+
   <div class="login-popup" id="recuperarEmailPopup">
     <h2>Recuperar Senha</h2>
     <form>
@@ -68,7 +78,6 @@
     <a href="#" id="voltarLoginDoEmail" class="register-link">Voltar ao login</a>
   </div>
 
-  <!-- Pop-up de alteração de senha -->
   <div class="login-popup" id="changePasswordPopup">
     <h2>Recuperar senha</h2>
     <form>
@@ -87,7 +96,6 @@
     <img src="img/banner.png" alt="Treino na academia" />
   </section>
 
-  <!-- Carrossel acima do banner -->
   <div class="carrosselUm">
     <div class="swiper swiper1">
       <div class="swiper-wrapper">
@@ -100,7 +108,6 @@
     </div>
   </div>
 
-  <!-- Segundo Carrossel -->
   <div class="container">
     <div class="swiper swiper2">
       <div class="swiper-wrapper">
@@ -161,12 +168,10 @@
     <div class="footer-top">
       <div class="footer-left">
         <div class="footer-social">
-          <a href="https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1&app_absent=0">
-            <img src="icones/icons8-whatsapp-50.png" alt="WhatsApp" />
-          </a>
-          <a href="https://www.instagram.com/equipesaudeemacao/">
-            <img src="icones/icons8-instagram-50.png" alt="Instagram" />
-          </a>
+          <a href="https://api.whatsapp.com/message/7SFQMRX2M76KG1?autoload=1&app_absent=0"><img
+              src="icones/icons8-whatsapp-50.png" alt="WhatsApp" /></a>
+          <a href="https://www.instagram.com/equipesaudeemacao/"><img src="icones/icons8-instagram-50.png"
+              alt="Instagram" /></a>
         </div>
       </div>
       <div class="footer-logo"><img src="img/logo1.png" alt="Logo2" /></div>
@@ -179,20 +184,45 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <script src="js/carrossel.js"></script>
+
 
   <script>
     const overlay = document.getElementById("overlay");
     let isRecuperacaoSenha = false;
 
-    // Abre popup de login ao clicar no ícone de perfil
     document.getElementById("perfilBtn").addEventListener("click", () => {
-      document.getElementById("loginPopup").classList.add("active");
-      overlay.classList.add("active");
+      const token = sessionStorage.getItem('token');
+      if (token) {
+        const payload = parseJwt(token);
+        if (payload.perfil === "ADMIN") {
+          window.location.href = "PerfilAdm.html";
+        } else {
+          window.location.href = "perfil.html";
+        }
+      } else {
+        document.getElementById("loginPopup").classList.add("active");
+        overlay.classList.add("active");
+      }
     });
 
-    // Quando clica em "Esqueci senha" → mostra popup de email
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    }
+
     document.querySelector(".forgot-password").addEventListener("click", () => {
       isRecuperacaoSenha = true;
       document.getElementById("loginPopup").classList.remove("active");
@@ -200,51 +230,196 @@
       overlay.classList.add("active");
     });
 
-    // Quando envia o email para recuperação → vai para verificação de código
-    document.getElementById("enviarEmailRecuperacaoBtn").addEventListener("click", () => {
-      document.getElementById("recuperarEmailPopup").classList.remove("active");
-      document.getElementById("verificacaoCodigoPopup").classList.add("active");
-    });
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("Email").value.trim();
+      const senha = document.getElementById("password").value;
 
-    // Quando clica em "Login" normal
-    document.getElementById("loginBtn").addEventListener("click", () => {
-      isRecuperacaoSenha = false;
-      document.getElementById("loginPopup").classList.remove("active");
-      document.getElementById("verificacaoCodigoPopup").classList.add("active");
-      overlay.classList.add("active");
-    });
+      if (!email || !senha) {
+        alert("Preencha todos os campos.");
+        return;
+      }
 
-    // Ao clicar em "Enviar" no código de verificação
-    document.getElementById("enviarCodigoBtn").addEventListener("click", () => {
-      document.getElementById("verificacaoCodigoPopup").classList.remove("active");
-
-      if (isRecuperacaoSenha) {
-        // Recuperação de senha → abre alteração de senha
-        document.getElementById("changePasswordPopup").classList.add("active");
-      } else {
-        // Login normal → fecha tudo
-        overlay.classList.remove("active");
+      try {
+        const response = await fetch("https://saude-api-hwp6.onrender.com/api/auth/solicitar-token", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, senha })
+        });
+        const texto = await response.text();
+        if (!response.ok) {
+          alert("Erro: " + texto);
+          return;
+        }
+        alert(texto);
+        document.getElementById("loginPopup").classList.remove("active");
+        document.getElementById("verificacaoCodigoPopup").classList.add("active");
+        overlay.classList.add("active");
+      } catch (err) {
+        console.error("Erro na requisição:", err);
+        alert("Erro ao conectar com o servidor.");
       }
     });
 
-    // Voltar ao login a partir do popup de alteração de senha
+    document.getElementById("enviarEmailRecuperacaoBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email-recuperacao").value.trim();
+      if (!email) {
+        alert("Digite o e-mail para recuperação.");
+        return;
+      }
+      try {
+        const response = await fetch("https://saude-api-hwp6.onrender.com/api/auth/esqueci-senha/solicitar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+        const texto = await response.text();
+        if (!response.ok) {
+          alert("Erro: " + texto);
+          return;
+        }
+        alert(texto);
+        document.getElementById("recuperarEmailPopup").classList.remove("active");
+        document.getElementById("verificacaoCodigoPopupSenha").classList.add("active");
+        overlay.classList.add("active");
+      } catch (err) {
+        console.error("Erro ao solicitar recuperação:", err);
+        alert("Erro ao conectar com o servidor.");
+      }
+    });
+
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    }
+
+    document.getElementById("enviarCodigoBtnLogin").addEventListener("click", async () => {
+      const inputsCodigo = document.querySelectorAll("#verificacaoCodigoPopup .codigo");
+      let token = "";
+      inputsCodigo.forEach(input => {
+        token += input.value.trim();
+      });
+      if (!token) {
+        alert("Digite o token.");
+        return;
+      }
+      try {
+        const response = await fetch("https://saude-api-hwp6.onrender.com/api/auth/login-token", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token })
+        });
+        const texto = await response.text();
+        if (!response.ok) {
+          alert("Erro: " + texto);
+          return;
+        }
+        sessionStorage.setItem('token', texto);
+        const payload = parseJwt(texto);
+        if (payload.perfil === "ADMIN") {
+          window.location.href = "PerfilAdm.html";
+        } else {
+          window.location.href = "perfil.html";
+        }
+      } catch (err) {
+        console.error("Erro ao validar token de login:", err);
+        alert("Erro ao validar o token.");
+      }
+    });
+
+    document.getElementById("enviarCodigoBtnSenha").addEventListener("click", () => {
+      const inputsCodigo = document.querySelectorAll("#verificacaoCodigoPopupSenha .codigo");
+      let token = "";
+      inputsCodigo.forEach(input => {
+        token += input.value.trim();
+      });
+      if (!token) {
+        alert("Digite o token.");
+        return;
+      }
+      document.getElementById("verificacaoCodigoPopupSenha").classList.remove("active");
+      document.getElementById("changePasswordPopup").classList.add("active");
+      overlay.classList.add("active");
+      window.tokenRecuperacaoSenha = token;
+    });
+
+    document.querySelector("#changePasswordPopup form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const novaSenha = document.getElementById("new-password").value;
+      const confirmarSenha = document.getElementById("confirm-new-password").value;
+      if (!novaSenha || !confirmarSenha) {
+        alert("Preencha os dois campos de senha.");
+        return;
+      }
+      if (novaSenha !== confirmarSenha) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+      const token = window.tokenRecuperacaoSenha;
+      if (!token) {
+        alert("Token de recuperação não encontrado. Tente novamente.");
+        return;
+      }
+      try {
+        const response = await fetch("https://saude-api-hwp6.onrender.com/api/auth/esqueci-senha/confirmar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, novaSenha })
+        });
+        const texto = await response.text();
+        if (!response.ok) {
+          alert("Erro: " + texto);
+          return;
+        }
+        alert(texto);
+        document.getElementById("changePasswordPopup").classList.remove("active");
+        overlay.classList.remove("active");
+      } catch (err) {
+        console.error("Erro ao redefinir senha:", err);
+        alert("Erro ao conectar com o servidor.");
+      }
+    });
+
+    overlay.addEventListener("click", () => {
+      document.querySelectorAll(".login-popup").forEach(popup => popup.classList.remove("active"));
+      overlay.classList.remove("active");
+    });
+
     document.getElementById("showLoginFromChange").addEventListener("click", () => {
       document.getElementById("changePasswordPopup").classList.remove("active");
       document.getElementById("loginPopup").classList.add("active");
     });
 
-    // Voltar ao login a partir do popup de email
     document.getElementById("voltarLoginDoEmail").addEventListener("click", () => {
       document.getElementById("recuperarEmailPopup").classList.remove("active");
       document.getElementById("loginPopup").classList.add("active");
     });
+  </script>
 
-    // Fechar tudo ao clicar fora
-    overlay.addEventListener("click", () => {
-      document.querySelectorAll(".login-popup").forEach(popup => popup.classList.remove("active"));
-      overlay.classList.remove("active");
+  <script>
+    const campos = document.querySelectorAll('.codigo');
+    campos.forEach((campo, index) => {
+      campo.addEventListener('input', () => {
+        if (campo.value.length === 1 && index < campos.length - 1) {
+          campos[index + 1].focus();
+        }
+      });
+      campo.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && campo.value === '' && index > 0) {
+          campos[index - 1].focus();
+        }
+      });
     });
   </script>
+
 </body>
 
 </html>

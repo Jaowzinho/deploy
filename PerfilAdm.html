@@ -3,78 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Perfil Administrador</title>
     <link rel="stylesheet" href="css/perfil.css">
+    <script type="module" src="service/api.js"></script>
 </head>
 <body>
-    <header>
-        <img src="img/logo.png" alt="" class="logo" width="60" height="60">
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="personal.html">Professores</a></li>
-                <li><a href="loja.html">Loja</a></li>
-            </ul>
-        </nav>
+   <header
+      class="container-fluid d-flex justify-content-between align-items-center"
+    >
+      <div class="img-fluid">
+        <img src="img/logo.png" alt="logoacademia" class="img-fluid" />
+      </div>
+      <nav>
+        <ul
+          class="d-flex list-unstyled justify-content-center align-items-center m-0"
+        >
+          <li class=""><a href="index.html">Início</a></li>
+          <li class=""><a href="personal.html">Professores</a></li>
+          <li class=""><a href="loja.html">Loja</a></li>
+          <li class=""><a href="adm.html">Painel</a></li>
+        </ul>
+      </nav>
     </header>
+
+        <div class="linha-topo-full"></div>
     
     <main>
         <section class="perfil">
             <img src="icones/icone Perfil 100x100.png" alt="Avatar" class="avatar">
-            <h2>Olá, Xxxxxxxxx</h2>
+            <h2 id="adminName">Carregando...</h2>
             <div class="info plano">
-                <div class="tipo-plano"><strong>Tipo de plano:</strong> xxxxxxxxxx</div>
-                <div class="duracao-plano"><strong>Duração do plano:</strong> xxxxxxxxxx</div>
+                <div class="tipo-plano"><strong>Função:</strong> <span id="adminRole">Administrador</span></div>
             </div>
         </section>
 
         <section class="cadastro">
             <h3>Dados de cadastro</h3>
-            <form>
+            <form id="adminProfileForm">
                 <label>Nome</label>
-                <input type="text" value="xxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx" disabled>
-                
-                <label>CPF</label>
-                <input type="text" value="xxxxxxxxxxxx xxxxxxxxxxxxxx" disabled>
+                <input type="text" id="name" disabled>
                 
                 <label>Email</label>
-                <input type="email" value="xxxxxxxxxxxx xxxxxxxxxxxxxx" disabled>
+                <input type="email" id="email" disabled>
                 
                 <label>Telefone</label>
-                <input type="text" value="xxxxxxxxxxxx xxxxxxxxxxxxxx" disabled>
+                <input type="text" id="phone" disabled>
                 
                 <label>Senha</label>
-                <input type="password" value="xxxxxxxxxxxx xxxxxxxxxxxxxx" disabled>
+                <input type="password" id="password" disabled>
+                
+                
             </form>
         </section>
-      
-       </main>
 
-       <div class="footer-links">
+    </main>
+
+    <div class="footer-links">
         <ul>
-          <li><a href="suporte.html">Suporte</a></li>
-          <li><a href="sobre_nos.html">Sobre nós</a></li>
-          <li><a href="adm.html">Gerenciar</a></li>
+            <li><a href="suporte.html">Suporte</a></li>
+            <li><a href="sobre_nos.html">Sobre nós</a></li>
+            <li><a href="adm.html">Gerenciar</a></li>
         </ul>
         <ul>
-          <li><a href="loja.html">Loja</a></li>
-          <li><a href="personal.html">Professores</a></li>
+            <li><a href="loja.html">Loja</a></li>
+            <li><a href="personal.html">Professores</a></li>
         </ul>
-      </div>
+    </div>
       
-      <footer class="footer">
+    <footer class="footer">
         <div class="footer-top">
-          <div class="footer-left">
-            
-          </div>
-      
-          <div class="footer-logo">
-            <img src="img/logo1.png" alt="Logo Otávio Pereira">
-          </div>
+            <div class="footer-left"></div>
+            <div class="footer-logo">
+                <img src="img/logo1.png" alt="Logo Otávio Pereira">
+            </div>
         </div>
-      
-        <div class="footer-bottom">
-        </div>
-    
+        <div class="footer-bottom"></div>
+    </footer>
+
+    <script type="module">
+    // Verificar autenticação
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        document.body.innerHTML = '<h2 style="text-align:center;margin-top:50px;">Você precisa estar logado para acessar esta página.</h2><div style="text-align:center;"><a href="index.html">Voltar ao login</a></div>';
+        throw new Error('Acesso não autenticado');
+    }
+
+    // Carregar dados do perfil admin
+    async function loadAdminProfile() {
+        try {
+            const response = await fetch("https://saude-api-hwp6.onrender.com/api/usuario/meu-perfil", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Erro ao buscar perfil: " + response.status);
+            }
+            const adminData = await response.json();
+
+            // Preencher dados do admin
+            document.getElementById('adminName').textContent = `Olá, ${adminData.nome || adminData.name || adminData.email}`;
+            document.getElementById('adminRole').textContent = adminData.tipo || adminData.role || 'Administrador';
+
+            document.getElementById('name').value = adminData.nome || adminData.name || "";
+          
+            document.getElementById('email').value = adminData.login || adminData.email || "";
+            document.getElementById('phone').value = adminData.telefone || adminData.phone || "";
+            document.getElementById('password').value = '********';
+        } catch (error) {
+            console.error('Erro ao carregar perfil admin:', error);
+            alert('Erro ao carregar dados do perfil');
+        }
+    }
+
+    // Carregar perfil ao iniciar
+    loadAdminProfile();
+</script>
 </body>
 </html>

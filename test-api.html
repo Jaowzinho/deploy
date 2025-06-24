@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de API</title>
+    <script type="module" src="service/api.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste de API</h1>
+    
+    <div class="test-section">
+        <h3>🔗 Teste de Conectividade</h3>
+        <button class="test-button" onclick="testConnectivity()">Testar Conexão com APIs</button>
+        <div id="connectivity-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔐 Teste de Login</h3>
+        <input type="email" id="test-email" placeholder="Email de teste" value="teste@exemplo.com">
+        <input type="password" id="test-password" placeholder="Senha de teste" value="123456">
+        <button class="test-button" onclick="testLogin()">Testar Login</button>
+        <div id="login-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📧 Teste de Recuperação de Senha</h3>
+        <input type="email" id="reset-email" placeholder="Email para recuperação" value="teste@exemplo.com">
+        <button class="test-button" onclick="testPasswordReset()">Testar Recuperação</button>
+        <div id="reset-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📋 Logs de Console</h3>
+        <button class="test-button" onclick="clearLogs()">Limpar Logs</button>
+        <div id="console-logs" class="result info"></div>
+    </div>
+
+    <script type="module">
+        import api from './service/api.js';
+
+        // Função para mostrar resultados
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `result ${type}`;
+        }
+
+        // Função para capturar logs do console
+        const originalLog = console.log;
+        const originalError = console.error;
+        const logsDiv = document.getElementById('console-logs');
+
+        function updateLogs() {
+            logsDiv.textContent = 'Logs aparecerão aqui quando você fizer os testes...';
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            logsDiv.textContent += args.join(' ') + '\n';
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            logsDiv.textContent += '❌ ' + args.join(' ') + '\n';
+        };
+
+        // Teste de conectividade
+        window.testConnectivity = async function() {
+            showResult('connectivity-result', '🔄 Testando conectividade...', 'info');
+            
+            try {
+                // Teste da API Saude
+                const saudeResponse = await fetch('https://saude-api-hwp6.onrender.com', {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                // Teste da API Admin
+                const adminResponse = await fetch('https://api-admin-8p0v.onrender.com', {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                let result = '📊 Resultados dos testes:\n\n';
+                result += `🏥 API Saude (${saudeResponse.status}): ${saudeResponse.ok ? '✅ Online' : '❌ Erro'}\n`;
+                result += `👨‍💼 API Admin (${adminResponse.status}): ${adminResponse.ok ? '✅ Online' : '❌ Erro'}\n\n`;
+                
+                if (saudeResponse.ok) {
+                    const saudeData = await saudeResponse.text();
+                    result += `📥 Resposta Saude: ${saudeData}\n`;
+                }
+                
+                if (adminResponse.ok) {
+                    const adminData = await adminResponse.text();
+                    result += `📥 Resposta Admin: ${adminData}\n`;
+                }
+
+                showResult('connectivity-result', result, saudeResponse.ok && adminResponse.ok ? 'success' : 'error');
+            } catch (error) {
+                showResult('connectivity-result', `❌ Erro de conectividade: ${error.message}`, 'error');
+            }
+        };
+
+        // Teste de login
+        window.testLogin = async function() {
+            const email = document.getElementById('test-email').value;
+            const password = document.getElementById('test-password').value;
+            
+            if (!email || !password) {
+                showResult('login-result', '❌ Por favor, preencha email e senha', 'error');
+                return;
+            }
+
+            showResult('login-result', '🔄 Testando login...', 'info');
+            
+            try {
+                const response = await api.saude.login({ email, password });
+                showResult('login-result', `✅ Login bem-sucedido!\n📥 Resposta: ${JSON.stringify(response, null, 2)}`, 'success');
+            } catch (error) {
+                showResult('login-result', `❌ Erro no login: ${error.message}`, 'error');
+            }
+        };
+
+        // Teste de recuperação de senha
+        window.testPasswordReset = async function() {
+            const email = document.getElementById('reset-email').value;
+            
+            if (!email) {
+                showResult('reset-result', '❌ Por favor, insira um email', 'error');
+                return;
+            }
+
+            showResult('reset-result', '🔄 Testando recuperação de senha...', 'info');
+            
+            try {
+                await api.saude.requestPasswordReset(email);
+                showResult('reset-result', '✅ Solicitação de recuperação enviada com sucesso!', 'success');
+            } catch (error) {
+                showResult('reset-result', `❌ Erro na recuperação: ${error.message}`, 'error');
+            }
+        };
+
+        // Limpar logs
+        window.clearLogs = function() {
+            logsDiv.textContent = '';
+        };
+
+        // Inicializar
+        updateLogs();
+    </script>
+</body>
+</html> 

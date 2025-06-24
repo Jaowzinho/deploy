@@ -1,92 +1,195 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerenciamento de Aluno</title>
-  <link rel="stylesheet" href="css/alunos.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Aluno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/alunos.css">
 </head>
 <body>
 
-  <header class="container-fluid d-flex justify-content-between align-items-center p-3">
-    <img src="img/logo.png" alt="logoacademia" class="img-fluid">
-    <a href="adm.html">
-      <img src="icones/Home.png" alt="Home" width="40" height="40">
-    </a>
-  </header>
-
-  <div class="linha-topo-full"></div>
-
-  <main>
-    <section class="container">
-      <button class="add-btn" onclick="mostrarFormulario()">➕ Adicionar Aluno</button>
-
-     
-      <div id="form-cadastro" class="form-group hidden">
-        <label>Nome:</label>
-        <input type="text" id="nomeCadastro" />
-        <label>Email:</label>
-        <input type="email" id="emailCadastro" />
-        <label>Senha:</label>
-        <input type="password" id="senhaCadastro" />
-
-        <div class="center">
-          <button class="cadastrar-btn" onclick="cadastrarAluno()">CADASTRAR ALUNO(A)</button>
-        </div>
-      </div>
-
-      
-      <div class="form-group">
-        <label>Nome:</label>
-        <input type="text" />
-        <label>Email:</label>
-        <input type="email" />
-        <label>Senha:</label>
-        <input type="password" />
-        <div class="btn-group">
-          <button class="edit-btn">Editar</button>
-          <button class="delete-btn">Excluir</button>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Nome:</label>
-        <input type="text" />
-        <label>Email:</label>
-        <input type="email" />
-        <label>Senha:</label>
-        <input type="password" />
-        <div class="btn-group">
-          <button class="edit-btn">Editar</button>
-          <button class="delete-btn">Excluir</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
+<header class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="img-fluid">
+        <img src="img/logo.png" alt="logoacademia" class="img-fluid">
+    </div>
+    <nav>
+        <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
+            <li>
+                <a href="adm.html">
+                    <img src="icones/Home.png" alt="Home" width="40" height="40">
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
   
-  <div class="footer-links">
-    <ul>
-      <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
-      <li><a href="dashboard.html">Dashboard</a></li>
-    </ul>
-    <ul>
-      <li><a href="adicionarproduto.html">Adicionar Produtos</a></li>
-      <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
-    </ul>
-  </div>
+<div class="linha-topo-full"></div>
 
-  <footer class="footer">
+<main class="d-flex justify-content-center py-4 px-3">
+    <div class="container-form" style="width: 100%;">
+        <h1 class="text-center">Gerenciar Aluno</h1>
+        <button class="btn btn-primary btn-adicionar-professor mb-4 w-100 w-md-auto d-block mx-auto mx-md-0">
+            <a href="adicionaraluno.html" style="text-decoration: none; color: #fff;">
+                <i class="bi bi-plus-lg me-2"></i> ADICIONAR ALUNO
+            </a>
+        </button>
+        <div id="mensagem"></div>
+        <div id="alunos-list"></div>
+    </div>
+</main>
+
+<div class="footer-links">
+    <ul>
+        <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+    </ul>
+    <ul>
+        <li><a href="gerenciarproduto.html">Gerenciar Produtos</a></li>
+        <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
+    </ul>
+</div>
+
+<footer class="footer">
     <div class="footer-top">
-      <div class="footer-left"></div>
-      <div class="footer-logo">
-        <img src="img/logo1.png" alt="Logo Otávio Pereira">
-      </div>
+        <div class="footer-left"></div>
+        <div class="footer-logo">
+            <img src="img/logo1.png" alt="Logo Otávio Pereira">
+        </div>
     </div>
     <div class="footer-bottom"></div>
-  </footer>
+</footer>
 
-  
-  <script src="js/alunos.js"></script>
+<script src="service/apiAdmin.js"></script>
+<script>
+// Função para formatar telefone ao atualizar
+function formatarTelefone(telefone) {
+    telefone = telefone.replace(/\D/g, "");
+    if (telefone.length === 11) {
+        return `(${telefone.substr(0, 2)}) ${telefone.substr(2, 5)}-${telefone.substr(7, 4)}`;
+    } else if (telefone.length === 10) {
+        return `(${telefone.substr(0, 2)}) ${telefone.substr(2, 4)}-${telefone.substr(6, 4)}`;
+    } else {
+        return telefone;
+    }
+}
+
+async function carregarAlunos() {
+    const container = document.getElementById('alunos-list');
+    container.innerHTML = '<div class="text-center">Carregando alunos...</div>';
+    try {
+        const alunos = await apiAdmin.getAlunos();
+        if (!alunos || alunos.length === 0) {
+            container.innerHTML = '<div class="alert alert-info text-center">Nenhum aluno cadastrado.</div>';
+            return;
+        }
+        container.innerHTML = "";
+        alunos.forEach(aluno => {
+            container.innerHTML += `
+            <div class="card-aluno mb-4" data-id="${aluno.id}">
+                <div class="mb-3">
+                    <label class="form-label">Nome:</label>
+                    <input type="text" class="form-control" value="${aluno.nome}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">CPF:</label>
+                    <input type="text" class="form-control" value="${aluno.cpf}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email:</label>
+                    <input type="email" class="form-control" value="${aluno.email}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telefone:</label>
+                    <input type="text" class="form-control" value="${aluno.telefone}" readonly>
+                </div>
+                <div class="btn-group-aluno d-flex flex-column flex-md-row justify-content-end">
+                    <button class="btn btn-secondary btn-editar mb-2 mb-md-0 me-md-2">Editar</button>
+                    <button class="btn btn-success btn-salvar mb-2 mb-md-0 me-md-2" style="display:none;">Salvar</button>
+                    <button class="btn btn-danger btn-excluir">Excluir</button>
+                </div>
+            </div>
+            `;
+        });
+        adicionarListeners();
+    } catch (error) {
+        container.innerHTML = '<div class="alert alert-danger text-center">Erro ao carregar alunos.</div>';
+        console.error(error);
+    }
+}
+
+function adicionarListeners() {
+    // Editar
+    document.querySelectorAll('.btn-editar').forEach(btn => {
+        btn.onclick = function() {
+            const card = btn.closest('.card-aluno');
+            card.querySelectorAll('input').forEach((input, i) => {
+                if (i !== 1) input.removeAttribute('readonly'); // CPF não editável
+            });
+            card.querySelector('.btn-editar').style.display = 'none';
+            card.querySelector('.btn-salvar').style.display = '';
+        };
+    });
+
+    // Salvar (Update)
+    document.querySelectorAll('.btn-salvar').forEach(btn => {
+        btn.onclick = async function() {
+            const card = btn.closest('.card-aluno');
+            const id = card.getAttribute('data-id');
+            const inputs = card.querySelectorAll('input');
+            const nome = inputs[0].value.trim();
+            const cpf = inputs[1].value.trim();
+            const email = inputs[2].value.trim();
+            let telefone = inputs[3].value.trim();
+            telefone = formatarTelefone(telefone);
+
+            if (!nome || !cpf || !email || !telefone) {
+                mostrarMensagem('Preencha todos os campos.', 'danger');
+                return;
+            }
+
+            try {
+                await apiAdmin.updateAluno(id, { nome, cpf, email, telefone });
+                mostrarMensagem('Aluno atualizado com sucesso.', 'success');
+                // Volta para readonly
+                inputs.forEach((input, i) => { input.setAttribute('readonly', true); });
+                card.querySelector('.btn-editar').style.display = '';
+                card.querySelector('.btn-salvar').style.display = 'none';
+                // Atualiza valor formatado no input
+                inputs[3].value = telefone;
+            } catch (error) {
+                mostrarMensagem('Erro ao atualizar aluno.', 'danger');
+                console.error(error);
+            }
+        };
+    });
+
+    // Excluir (Delete)
+    document.querySelectorAll('.btn-excluir').forEach(btn => {
+        btn.onclick = async function() {
+            if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
+            const card = btn.closest('.card-aluno');
+            const id = card.getAttribute('data-id');
+            try {
+                await apiAdmin.deleteAluno(id);
+                card.remove();
+                mostrarMensagem('Aluno excluído com sucesso.', 'success');
+            } catch (error) {
+                mostrarMensagem('Erro ao excluir aluno.', 'danger');
+                console.error(error);
+            }
+        };
+    });
+}
+
+function mostrarMensagem(msg, tipo) {
+    const mensagemEl = document.getElementById('mensagem');
+    mensagemEl.innerHTML = `<div class="alert alert-${tipo} text-center">${msg}</div>`;
+    setTimeout(() => { mensagemEl.innerHTML = ""; }, 3000);
+}
+
+// Carrega os alunos ao abrir a página
+carregarAlunos();
+</script>
 </body>
 </html>

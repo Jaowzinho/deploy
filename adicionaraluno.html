@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Aluno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/adicionar_aluno.css">
+</head>
+<body>
+
+      <header class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="img-fluid">
+      <img src="img/logo.png" alt="logoacademia" class="img-fluid" />
+    </div>
+    <nav>
+      <ul class="d-flex list-unstyled justify-content-center align-items-center m-0">
+        <li class="">
+          <a href="adm.html">
+            <img src="icones/Home.png" alt="" width="40" height="40" />
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+      <div class="linha-topo-full"></div>
+
+  <main class="d-flex justify-content-center py-4 px-3">
+    <div class="container-form">
+      <h1 class="text-center">ADICIONAR ALUNO</h1>
+      <div class="card-aluno mb-4">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" class="form-control" id="nome" placeholder="Nome do Aluno">
+        </div>
+        <div class="mb-3">
+            <label for="cpf" class="form-label">CPF:</label>
+            <input type="text" class="form-control" id="cpf" placeholder="CPF do Aluno">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="email@exemplo.com">
+        </div>
+        <div class="mb-3">
+            <label for="telefone" class="form-label">Telefone:</label>
+            <input type="text" class="form-control" id="telefone" placeholder="(xx) xxxxx-xxxx">
+        </div>
+        <div class="btn-group-aluno d-flex flex-column flex-md-row justify-content-end">
+            <button class="btn btn-primary btn-adicionar-card mb-2 mb-md-0 me-md-2" id="btnAdicionarAluno">Adicionar</button>
+        </div>
+      </div>
+      <div id="mensagem" class="mt-3"></div>
+    </div>
+  </main>
+
+  <div class="footer-links">
+      <ul>
+        <li><a href="gerenciaralunos.html">Gerenciar Aluno</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+      <ul>
+        <li><a href="gerenciarproduto.html">Gerenciar Produtos</a></li>
+        <li><a href="gerenciarprofessores.html">Gerenciar Professores</a></li>
+      </ul>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-left"></div>
+        <div class="footer-logo">
+          <img src="img/logo1.png" alt="Logo Otávio Pereira" />
+        </div>
+      </div>
+      <div class="footer-bottom"></div>
+    </footer>
+  </div>
+
+  <script>
+    const API_BASE_URL = 'https://api-admin-8p0v.onrender.com';
+document.getElementById('btnAdicionarAluno').addEventListener('click', async function(e) {
+    e.preventDefault();
+
+    const nome = document.getElementById('nome').value.trim();
+    const cpf = document.getElementById('cpf').value.trim();
+    const email = document.getElementById('email').value.trim();
+    let telefone = document.getElementById('telefone').value.trim();
+
+    const mensagemEl = document.getElementById('mensagem');
+    mensagemEl.innerHTML = '';
+
+    if (!nome || !cpf || !email || !telefone) {
+        mensagemEl.innerHTML = "<div class='alert alert-danger'>Preencha todos os campos obrigatórios!</div>";
+        return;
+    }
+
+    // Formata o telefone
+    telefone = formatarTelefone(telefone);
+
+    const alunoData = { nome, cpf, email, telefone };
+    console.log('Enviando:', alunoData);
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/alunos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(alunoData)
+        });
+        if (!response.ok) {
+            let msg = `Erro HTTP ao adicionar aluno: ${response.status} - ${response.statusText}`;
+            try {
+                const err = await response.json();
+                msg += '<br>Resposta do servidor: ' + JSON.stringify(err);
+            } catch(e) {}
+            throw new Error(msg);
+        }
+        const novoAluno = await response.json();
+        mensagemEl.innerHTML = "<div class='alert alert-success'>Aluno adicionado com sucesso!</div>";
+        document.getElementById('nome').value = '';
+        document.getElementById('cpf').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('telefone').value = '';
+        console.log('Aluno cadastrado:', novoAluno);
+    } catch (error) {
+        mensagemEl.innerHTML = `<div class='alert alert-danger'>${error.message}</div>`;
+        console.error(error);
+    }
+});
+
+// Função para formatar o telefone
+function formatarTelefone(telefone) {
+  telefone = telefone.replace(/\D/g, "");
+  if (telefone.length === 11) {
+    return `(${telefone.substr(0, 2)}) ${telefone.substr(2, 5)}-${telefone.substr(7, 4)}`;
+  } else if (telefone.length === 10) {
+    return `(${telefone.substr(0, 2)}) ${telefone.substr(2, 4)}-${telefone.substr(6, 4)}`;
+  } else {
+    return telefone;
+  }
+}
+  </script>
+</body>
+</html>
